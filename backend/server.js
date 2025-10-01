@@ -55,6 +55,15 @@ app.get('/api/note/:id', async(req,res)=>{
         console.log(err)
     }
 })
+app.put('/api/note/:id', async(req,res)=>{
+    try{
+        await Note.findByIdAndUpdate({_id:req.params.id},{note:req.body.note})
+        console.log('Note Updated in Database')
+        res.json('Note Updated in Database')
+    }catch(err){
+        console.log(err)
+    }
+})
 const PORT = process.env.PORT || 1111
 app.listen(PORT, ()=> console.log(`Server Listening on Port: ${PORT}`))
 
