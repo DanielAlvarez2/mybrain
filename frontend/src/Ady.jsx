@@ -1,7 +1,12 @@
+import './Ady.css'
 export default function Ady(){
     return(
         <>
-            <h1>Control Panel</h1>
+            <div className='wrapper'>
+                <div className='adys-phone'>
+                    <h1>Control Panel</h1>
+                </div>{/* .adys-phone */}
+            </div>{/* .wrapper */}
         </>
     )
 }

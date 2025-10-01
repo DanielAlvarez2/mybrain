@@ -1,0 +1,15 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+.wrapper{
+    display: grid;
+    place-content: center;
+}
+.adys-phone{
+    width:412px;
+    min-height:1006px;
+    border:1px solid blue;
+    padding:10px;
+}
