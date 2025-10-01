@@ -29,6 +29,15 @@ app.post('/api/note', async(req,res)=>{
         console.log(err)
     }
 })
+app.delete('/api/note/:id', async(req,res)=>{
+    try{
+        await Note.findByIdAndDelete(req.params.id)
+        console.log('Note Deleted from Database')
+        res.json('Note Deleted from Database')
+    }catch(err){
+        console.log(err)
+    }
+})
 const PORT = process.env.PORT || 1111
 app.listen(PORT, ()=> console.log(`Server Listening on Port: ${PORT}`))
 
