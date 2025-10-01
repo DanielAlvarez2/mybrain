@@ -2,10 +2,14 @@ import { useState, useEffect } from 'react'
 
 export default function App() {
 
+  const BASE_URL =  (process.env.NODE_ENV == 'production') ? 
+                    'https://mybrain-8bpo.onrender.com' :
+                    'http://localhost:1111'
+
   const [notes, setNotes] = useState([])
 
   const getNotes = ()=>{
-    fetch('/api/note')
+    fetch(`${BASE_URL}/api/note`)
       .then(res=>res.json())
       .then(json=>setNotes(json))
       .catch(err=>console.log(err))
