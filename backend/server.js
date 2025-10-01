@@ -38,6 +38,23 @@ app.delete('/api/note/:id', async(req,res)=>{
         console.log(err)
     }
 })
+app.get('/api/note', async(req,res)=>{
+    try{
+        const allNotes = await Note.find()
+        res.json(allNotes)
+    }catch(err){
+        console.log(err)
+    }
+})
+app.get('/api/note/:id', async(req,res)=>{
+    try{
+        const note = await Note.findById(req.params.id)
+        console.log(note)
+        res.json(note)
+    }catch(err){
+        console.log(err)
+    }
+})
 const PORT = process.env.PORT || 1111
 app.listen(PORT, ()=> console.log(`Server Listening on Port: ${PORT}`))
 
