@@ -1,0 +1,10 @@
+.wrapper{
+  display:grid;
+  place-content: center;
+}
+#dads-phone{
+  width:384px;
+  min-height:832px;
+  border:1px solid red;
+  padding:10px;
+}
