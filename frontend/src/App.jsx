@@ -22,6 +22,7 @@ export default function App() {
       <div className='wrapper'>
         <div id='dads-phone'>
           <h1>MYbrain</h1>
+          <hr/><br/>
           {notes.map(data=>{
             return(
               <div key={data._id}>
