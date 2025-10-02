@@ -66,6 +66,7 @@ export default function Ady() {
                 <label>
                     Add a New Note:<br/>
                     <textarea   name='note' 
+                                required
                                 style={{width:'100%',height:'100px'}}></textarea>
                 </label>
 
