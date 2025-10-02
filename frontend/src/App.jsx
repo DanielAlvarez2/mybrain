@@ -21,8 +21,15 @@ export default function App() {
     <>
       <div className='wrapper'>
         <div id='dads-phone'>
-          <h1>MYbrain</h1>
+            <h1 style={{display:'flex',
+                        alignItems:'center',
+                        justifyContent:'center'}}>
+                <img src='./brain.jpeg' width='60px' />
+                <span>MYbrain</span>
+            </h1>
+
           <hr/><br/>
+          <h2>{Date().slice(0,10)}</h2><br/>
           {notes.map(data=>{
             return(
               <div key={data._id}>
