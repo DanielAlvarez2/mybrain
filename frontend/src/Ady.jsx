@@ -3,12 +3,12 @@ import './Ady.css'
 
 export default function Ady() {
     async function createNewNote(formData){
-        await fetch(`${BASE_URL}/api/note`, { method:'POST', 
-                                            headers:{'Content-Type':'application/json'},
-                                            body: JSON.stringify({
-                                                note: formData.get('note')
-                                            })
-                                        })
+        await fetch(`${BASE_URL}/api/note`, {   method:'POST', 
+                                                headers:{'Content-Type':'application/json'},
+                                                body: JSON.stringify({
+                                                    note: formData.get('note')
+                                                })
+                })
                 .then(getNotes)
                 .catch(err=>console.log(err))
     }
@@ -33,6 +33,28 @@ export default function Ady() {
   }
 
   useEffect(()=>getNotes(),[])
+
+  function displayEdit(id){
+    document.querySelectorAll('.note-buttons').forEach(item=>item.style.display = 'block')
+    document.querySelectorAll('.edit-item').forEach(item=>item.style.display = 'none')
+    document.querySelector(`#edit-${id}`).style.display = 'block'
+    document.querySelector(`#buttons-${id}`).style.display = 'none'
+  }
+  function cancelEdit(){
+    document.querySelectorAll('.edit-item').forEach(item=>item.style.display = 'none')
+    document.querySelectorAll('.note-buttons').forEach(item=>item.style.display = 'block')
+  }
+  async function updateNote(formData){
+    await fetch(`${BASE_URL}/api/note/${formData.get('id')}`,
+                {   method:'PUT',
+                    headers:{'Content-Type':'application/json'},
+                    body: JSON.stringify({note: formData.get('note-update')})})
+            .then(document.querySelectorAll('.edit-item').forEach(item=>item.style.display = 'none'))
+            .then(document.querySelectorAll('.note-buttons').forEach(item=>item.style.display = 'block'))
+            .then(getNotes)
+            .catch(err=>console.log(err))
+  }
+
   return (
     <>
       <div className='wrapper'>
@@ -58,13 +80,33 @@ export default function Ady() {
                 return(
                 <div key={data._id}>
                     {data.note}<br/>
-                    <span   onClick={()=>deleteNote(data._id)} 
-                            style={{background:'red',
-                                    padding:'2px 5px',
-                                    color:'white',
-                                    borderRadius:'5px',
-                                    fontSize:'10px',
-                                    cursor:'pointer'}}>DELETE</span>
+
+                    <div className='edit-item' id={`edit-${data._id}`}>
+                        <span style={{color:'blue'}}>CHANGE TO:</span><br/>
+                        <form action={updateNote}>
+                            <input type='hidden' name='id' value={data._id} />
+                            <textarea name='note-update' defaultValue={data.note}></textarea>
+                            <input  type='submit'
+                                    value='UPDATE'
+                                    style={{background:'green',color:'white'}} 
+                                    className='note-btn' />
+                            <span   className='note-btn'
+                                    onClick={cancelEdit} 
+                                    style={{background:'red',color:'white'}}>CANCEL</span>
+                        </form>
+                    </div>
+                    <div id={`buttons-${data._id}`} className='note-buttons'>
+                        <span   className='note-btn' 
+                                onClick={()=>displayEdit(`${data._id}`)}
+                                style={{background:'blue',color:'white'}}
+                                >EDIT</span>
+                        
+                        <span   onClick={()=>deleteNote(data._id)} 
+                                className='note-btn'
+                                style={{background:'red',
+                                        color:'white'
+                                        }}>DELETE</span>    
+                    </div>
                     <br/><br/>
                 </div>
                 )
@@ -76,13 +118,13 @@ export default function Ady() {
                     Add a New Note:<br/>
                     <textarea   name='note' 
                                 required
-                                style={{width:'100%',height:'100px'}}></textarea>
+                    ></textarea>
                 </label>
 
                 <input  type='submit' 
                         value='Upload'
                         style={{padding:'5px 15px',
-                                background:'blue',
+                                background:'green',
                                 color:'white',
                                 cursor:'pointer',
                                 border:'none',
