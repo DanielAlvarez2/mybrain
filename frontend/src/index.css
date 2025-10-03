@@ -7,3 +7,6 @@
 h1,h2{
   text-align: center;
 }
+textarea{
+  padding: 2px 2px;
+}
