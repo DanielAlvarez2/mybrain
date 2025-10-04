@@ -32,9 +32,12 @@ export default function App() {
           <h2>{Date().slice(0,10)}</h2><br/>
 
           {
-            Date().slice(0,3) == 'Sat' || Date().slice(0,3) == 'Sun' && 
+            (Date().slice(0,3) == 'Sat' || Date().slice(0,3) == 'Sun') && 
               <>
-                <div style={{background:'red',color:'white',textAlign:'center'}}>
+                <div style={{ background:'red',
+                              color:'white',
+                              padding:'2px 0',
+                              textAlign:'center'}}>
                   The girls do NOT have school today
                 </div><br/>
               </>
