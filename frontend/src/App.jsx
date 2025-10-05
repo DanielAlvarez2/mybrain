@@ -19,7 +19,7 @@ export default function App() {
   useEffect(()=>getNotes(),[])
   return (
     <>
-      {setTimeout(()=>window.location.reload(),3600000)} {/* refresh page every hour */}
+      {setTimeout(()=>window.location.reload(),1800000)} {/* refresh page every half hour */}
       <div className='wrapper'>
         <div id='dads-phone'>
             <h1 style={{display:'flex',
