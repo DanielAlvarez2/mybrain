@@ -25,6 +25,7 @@ export default function TestDad() {
   return (
     <>
         {visibilityState == 'hidden' && window.location.reload()}
+        {setTimeout(()=>window.location.reload(),3600000)}
       <div className='wrapper'>
         <div id='dads-phone'>
             {showModal && 

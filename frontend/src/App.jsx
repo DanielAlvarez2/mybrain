@@ -19,6 +19,7 @@ export default function App() {
   useEffect(()=>getNotes(),[])
   return (
     <>
+      {setTimeout(()=>window.location.reload(),3600000)} {/* refresh page every hour */}
       <div className='wrapper'>
         <div id='dads-phone'>
             <h1 style={{display:'flex',
@@ -34,6 +35,7 @@ export default function App() {
           {
             (Date().slice(0,3) == 'Sat' || Date().slice(0,3) == 'Sun') && 
               <>
+
                 <div style={{ background:'red',
                               color:'white',
                               padding:'2px 0',
