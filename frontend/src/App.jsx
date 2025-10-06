@@ -17,9 +17,12 @@ export default function App() {
   }
 
   useEffect(()=>getNotes(),[])
+  function reloadPage(){
+    setTimeout(()=>window.location.reload(),1800000)
+  }
   return (
     <>
-      {setTimeout(()=>window.location.reload(),1800000)} {/* refresh page every half hour */}
+      
       <div className='wrapper'>
         <div id='dads-phone'>
             <h1 style={{display:'flex',
@@ -51,6 +54,9 @@ export default function App() {
               </div>
             )
           })}
+          {
+            reloadPage()
+          }       
         </div>{/* #dads-phone */}
       </div>{/* .wrapper */}
     </>
