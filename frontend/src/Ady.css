@@ -7,12 +7,7 @@
     display: grid;
     place-content: center;
 }
-.adys-phone{
-    width:412px;
-    min-height:1006px;
-    border:1px solid blue;
-    padding:10px;
-}
+
 .note-btn{
     border-radius:5px;
     font-size:10px;
