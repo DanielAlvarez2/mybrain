@@ -67,6 +67,20 @@ export default function App() {
             )
           })}
 
+          {birthdays.map(bday=>{
+            return(
+                (Date().slice(4,7) == bday.month && Date().slice(8,11) == bday.day) &&
+                    <div key={bday._id}>
+                      <div className='dad-display-bday'>
+                        Today is {bday.name}'s Birthday!<br/>
+                        {bday.year &&  <>
+                                          Turning {Date().slice(11,15)-bday.year} today<br/>
+                                        </>}
+                      </div>                      
+                      <br/>
+                    </div>              
+            )
+          })}
 
           {
             reloadPage()

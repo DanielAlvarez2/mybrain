@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react'
 import './Birthdays.css'
+import NavbarAdy from './components/NavbarAdy.jsx'
 
 export default function Birthdays(){
     const BASE_URL =    (process.env.NODE_ENV == 'production') ? 
@@ -48,7 +49,8 @@ export default function Birthdays(){
                         <img src='./brain.jpeg' width='60px' />
                         <span>MYbrain</span>
                     </h1>
-                    <hr/><br/>     
+                    <hr/> 
+                    <NavbarAdy />   
                     <h2>Birthdays</h2>
                     <br/>
 
@@ -157,7 +159,7 @@ export default function Birthdays(){
                         return(
                             <div key={bday._id}>
                                 <div className='display-bday' style={{display:'flex',gap:'5px'}}>
-                                    <span style={{width:'10ch'}}>{bday.month} {bday.day < 10 && '0'}{bday.day} {bday.year ? bday.year : '----'}</span>
+                                    <span style={{width:'12ch'}}>{bday.month} {bday.day < 10 && '0'}{bday.day} {bday.year ? bday.year : '----'}</span>
                                     <span>{bday.name}</span>
                                 </div>{/* .display-bday */}
                                 

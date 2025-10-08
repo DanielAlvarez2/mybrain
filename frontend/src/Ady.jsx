@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './Ady.css'
+import NavbarAdy from './components/NavbarAdy.jsx'
 
 export default function Ady() {
     async function createNewNote(formData){
@@ -67,7 +68,10 @@ export default function Ady() {
                         <img src='./brain.jpeg' width='60px' />
                         <span>MYbrain</span>
                     </h1>
-                    <hr/><br/>     
+                    <hr/>     
+            
+              <NavbarAdy />
+            
             <h2>{Date().slice(0,10)}</h2><br/>
             {
                 Date().slice(0,3) == 'Sat' || Date().slice(0,3) == 'Sun' && 

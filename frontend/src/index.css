@@ -25,3 +25,12 @@ textarea{
     margin-right:10px;
     border:none;
 }
+.dad-display-bday{
+  background:#52b4ff;
+  text-align: center;
+  padding:5px 0px;
+}
+a{
+  text-decoration: none;
+  color:blue;
+}
