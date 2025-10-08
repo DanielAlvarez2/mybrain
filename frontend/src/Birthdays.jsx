@@ -41,6 +41,8 @@ export default function Birthdays(){
             <div className='wrapper'>
                 <div className='adys-phone'>
                     <h1 style={{display:'flex',
+                                gap:'10px',
+                                marginBottom:'5px',
                                 alignItems:'center',
                                 justifyContent:'center'}}>
                         <img src='./brain.jpeg' width='60px' />

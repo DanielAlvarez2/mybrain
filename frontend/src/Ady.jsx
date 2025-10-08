@@ -59,13 +59,15 @@ export default function Ady() {
     <>
       <div className='wrapper'>
         <div className='adys-phone'>
-            <h1 style={{display:'flex',
-                        alignItems:'center',
-                        justifyContent:'center'}}>
-                <img src='./brain.jpeg' width='60px' />
-                <span>MYbrain</span>
-            </h1>
-            <hr/><br/>
+                    <h1 style={{display:'flex',
+                                gap:'10px',
+                                marginBottom:'5px',
+                                alignItems:'center',
+                                justifyContent:'center'}}>
+                        <img src='./brain.jpeg' width='60px' />
+                        <span>MYbrain</span>
+                    </h1>
+                    <hr/><br/>     
             <h2>{Date().slice(0,10)}</h2><br/>
             {
                 Date().slice(0,3) == 'Sat' || Date().slice(0,3) == 'Sun' && 
