@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const BirthdaySchema = new mongoose.Schema({
     name: {type:String},
     month: {type:String},
-    day: {type:String},
+    monthNum: {type:Number},
+    day: {type:Number},
     year: {type:Number}
 })
 

@@ -21,10 +21,25 @@ console.log('');
 
 app.post('/api/birthday', async(req,res)=>{
     try{
+        let monthNum;
+        if (req.body.month == 'Jan'){monthNum = 1
+        }else if(req.body.month == 'Feb'){monthNum=2
+        }else if(req.body.month == 'Mar'){monthNum=3
+        }else if(req.body.month == 'Apr'){monthNum=4
+        }else if(req.body.month == 'May'){monthNum=5
+        }else if(req.body.month == 'Jun'){monthNum=6
+        }else if(req.body.month == 'Jul'){monthNum=7
+        }else if(req.body.month == 'Aug'){monthNum=8
+        }else if(req.body.month == 'Sep'){monthNum=9
+        }else if(req.body.month == 'Oct'){monthNum=10
+        }else if(req.body.month == 'Nov'){monthNum=11
+        }else if(req.body.month == 'Dec'){monthNum=12}
+
         await Birthday.create({
             name:req.body.name,
             month:req.body.month,
-            day:req.body.day,
+            monthNum,
+            day:Number(req.body.day),
             year:req.body.year
         })
         console.log('Birthday Added to Database')
@@ -44,7 +59,7 @@ app.delete('/api/birthday/:id', async(req,res)=>{
 })
 app.get('/api/birthday', async(req,res)=>{
     try{
-        const allBirthdays = await Birthday.find()
+        const allBirthdays = await Birthday.find().sort({monthNum:1, day:1})
         res.json(allBirthdays)
     }catch(err){
         console.log(err)

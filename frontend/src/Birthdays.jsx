@@ -154,8 +154,11 @@ export default function Birthdays(){
                     {birthdays.map(bday=>{
                         return(
                             <div key={bday._id}>
-                                {bday.name} {bday.month} {bday.day} {bday.year} 
-                                <br/>
+                                <div className='display-bday' style={{display:'flex',gap:'5px'}}>
+                                    <span style={{width:'10ch'}}>{bday.month} {bday.day < 10 && '0'}{bday.day} {bday.year ? bday.year : '----'}</span>
+                                    <span>{bday.name}</span>
+                                </div>{/* .display-bday */}
+                                
                                 <span   className='bday-btn'
                                         onClick={()=>deleteBday(bday._id)} 
                                         style={{color:'white', 
