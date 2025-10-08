@@ -30,6 +30,12 @@ export default function Birthdays(){
         .then(getBirthdays)
         .catch(err=>console.log(err))
     }
+
+    async function deleteBday(id){
+        await fetch(`${BASE_URL}/api/birthday/${id}`, {method:'DELETE'})
+            .then(getBirthdays)
+            .catch(err=>console.log(err))
+    }
     return (
         <>
             <div className='wrapper'>
@@ -148,7 +154,14 @@ export default function Birthdays(){
                     {birthdays.map(bday=>{
                         return(
                             <div key={bday._id}>
-                                {bday.name} {bday.month} {bday.day} {bday.year}
+                                {bday.name} {bday.month} {bday.day} {bday.year} 
+                                <br/>
+                                <span   className='bday-btn'
+                                        onClick={()=>deleteBday(bday._id)} 
+                                        style={{color:'white', 
+                                                background:'red'
+                                }} >DELETE</span>
+                                <br/><br/>
                             </div>
                         )
                     })}
