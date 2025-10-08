@@ -1,6 +1,35 @@
+import {useState, useEffect} from 'react'
 import './Birthdays.css'
 
 export default function Birthdays(){
+    const BASE_URL =    (process.env.NODE_ENV == 'production') ? 
+                        'https://mybrain-8bpo.onrender.com' :
+                        'http://localhost:1111'
+
+    const [birthdays, setBirthdays] = useState([])
+    
+    const getBirthdays = ()=>{
+        fetch(`${BASE_URL}/api/birthday`)
+            .then(res=>res.json())
+            .then(json=>setBirthdays(json))
+            .catch(err=>console.log(err))
+    }
+
+    useEffect(()=>getBirthdays(),[])
+
+    async function addNewBirthday(formData){
+        await fetch(`${BASE_URL}/api/birthday`, {   method:'POST',
+                                                    headers:{'Content-Type':'application/json'},
+                                                    body: JSON.stringify({
+                                                        name: formData.get('name'),
+                                                        month: formData.get('month'),
+                                                        day: formData.get('day'),
+                                                        year: formData.get('year')
+                                                    })
+        })
+        .then(getBirthdays)
+        .catch(err=>console.log(err))
+    }
     return (
         <>
             <div className='wrapper'>
@@ -14,21 +43,24 @@ export default function Birthdays(){
                     <hr/><br/>     
                     <h2>Birthdays</h2>
                     <br/>
+
+
+
                     <div id='bday-form' style={{background:'lightgrey',
                                                 borderRadius:'10px',
                                                 padding:'5px'}}>
                         <h3>Add a New Birthday</h3><br/>
-                        <form>
+                        <form action={addNewBirthday}>
                             
                             <div style={{display:'flex',justifyContent:'space-between'}} id='bday-flexbox'>
                                 <label>
                                     Name:<br/>
-                                    <input type='text' required />
+                                    <input type='text' name='name' required />
                                 </label>
 
                                 <label>
                                     Month:<br/>
-                                    <select defaultValue='' required>
+                                    <select defaultValue='' name='month' required>
                                         <option value='' disabled>Select...</option>
                                         <option>Jan</option>
                                         <option>Feb</option>
@@ -47,7 +79,7 @@ export default function Birthdays(){
                                 <br/>
                                 <label>
                                     Day:<br/>
-                                    <select defaultValue='' required>
+                                    <select defaultValue='' name='day' required>
                                         <option value='' disabled>Select...</option>
                                         <option>1</option>
                                         <option>2</option>
@@ -84,7 +116,10 @@ export default function Birthdays(){
                                 </label><br/>
                                 <label>
                                     Year:<br/>
-                                    <input type='number' min='1900' max={new Date().getFullYear()} />
+                                    <input  type='number' 
+                                            name='year'
+                                            min='1900' 
+                                            max={new Date().getFullYear()} />
                                     <br/>
                                     <span style={{fontSize:'11px'}}>(optional)</span>
                                 </label>
@@ -105,8 +140,22 @@ export default function Birthdays(){
                                     }} />
 
                         </form>          
-                    
                     </div>{/* #bday-form */}
+
+                    <br/>
+
+
+                    {birthdays.map(bday=>{
+                        return(
+                            <div key={bday._id}>
+                                {bday.name} {bday.month} {bday.day} {bday.year}
+                            </div>
+                        )
+                    })}
+
+
+
+
                 </div>{/* .adys-phone */}
             </div>{/* .wrapper */}
         </>

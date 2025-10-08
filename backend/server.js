@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const Note = require('./models/Note.js')
+const Birthday = require('./models/Birthday.js')
 
 const app = express()
 app.use(express.json())
@@ -18,6 +19,58 @@ console.log('');
     }
 })()
 
+app.post('/api/birthday', async(req,res)=>{
+    try{
+        await Birthday.create({
+            name:req.body.name,
+            month:req.body.month,
+            day:req.body.day,
+            year:req.body.year
+        })
+        console.log('Birthday Added to Database')
+        res.json('Birthday Added to Database')
+    }catch(err){
+        console.log(err)
+    }
+})
+app.delete('/api/birthday/:id', async(req,res)=>{
+    try{
+        await Birthday.findByIdAndDelete(req.params.id)
+        console.log('Birthday Deleted from Database')
+        res.json('Birthday Deleted from Database')
+    }catch(err){
+        console.log(err)
+    }
+})
+app.get('/api/birthday', async(req,res)=>{
+    try{
+        const allBirthdays = await Birthday.find()
+        res.json(allBirthdays)
+    }catch(err){
+        console.log(err)
+    }
+})
+app.get('/api/birthday/:id', async(req,res)=>{
+    try{
+        const birthday = await Birthday.findById(req.params.id)
+        console.log(birthday)
+        res.json(birthday)
+    }catch(err){
+        console.log(err)
+    }
+})
+app.put('/api/birthday/:id', async(req,res)=>{
+    try{
+        await Birthday.findByIdAndUpdate({_id:req.params.id},{
+                                                                name: req.body.name,
+                                                                month: req.body.month,
+                                                                day: req.body.day,
+                                                                year: req.body.year
+        })
+    }catch(err){
+        console.log(err)
+    }
+})
 app.post('/api/note', async(req,res)=>{
     try{
         await Note.create({
