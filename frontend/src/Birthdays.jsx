@@ -65,7 +65,10 @@ export default function Birthdays(){
                             <div style={{display:'flex',justifyContent:'space-between'}} id='bday-flexbox'>
                                 <label>
                                     Name:<br/>
-                                    <input type='text' name='name' required />
+                                    <input  type='text' 
+                                            name='name' 
+                                            style={{width:'140px'}}
+                                            required />
                                 </label>
 
                                 <label>
