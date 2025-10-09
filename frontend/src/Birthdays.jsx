@@ -163,7 +163,7 @@ export default function Birthdays(){
                         return(
                             <div key={bday._id}>
                                 <div className='display-bday' style={{display:'flex',gap:'5px'}}>
-                                    <span style={{width:'12ch'}}>{bday.month} {bday.day < 10 && '0'}{bday.day} {bday.year ? bday.year : '----'}</span>
+                                    <span style={{width:'12ch'}}>{bday.month} {bday.day < 10 && '0'}{bday.day} {bday.year ? bday.year : '------'}</span>
                                     <span>{bday.name}</span>
                                 </div>{/* .display-bday */}
                                 
