@@ -67,7 +67,7 @@ export default function Birthdays(){
                                     Name:<br/>
                                     <input  type='text' 
                                             name='name' 
-                                            style={{width:'140px'}}
+                                            style={{width:'140px',padding:'0 2px'}}
                                             required />
                                 </label>
 
