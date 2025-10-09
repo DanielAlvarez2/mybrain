@@ -8,7 +8,14 @@ export default function App() {
                     'http://localhost:1111'
 
   const [notes, setNotes] = useState([])
+  const [birthdays, setBirthdays] = useState([])
 
+  const getBirthdays = ()=>{
+    fetch(`${BASE_URL}/api/birthday`)
+      .then(res=>res.json())
+      .then(json=>setBirthdays(json))
+      .catch(err=>console.log(err))
+  }
   const getNotes = ()=>{
     fetch(`${BASE_URL}/api/note`)
       .then(res=>res.json())
@@ -17,6 +24,7 @@ export default function App() {
   }
 
   useEffect(()=>getNotes(),[])
+  useEffect(()=>getBirthdays(),[])
 
 
   function reloadPage(){
@@ -59,6 +67,20 @@ export default function App() {
             )
           })}
 
+          {birthdays.map(bday=>{
+            return(
+                (Date().slice(4,7) == bday.month && Date().slice(8,11) == bday.day) &&
+                    <div key={bday._id}>
+                      <div className='dad-display-bday'>
+                        Today is {bday.name}'s Birthday!<br/>
+                        {bday.year &&  <>
+                                          Turning {Date().slice(11,15)-bday.year} today<br/>
+                                        </>}
+                      </div>                      
+                      <br/>
+                    </div>              
+            )
+          })}
 
           {
             reloadPage()
