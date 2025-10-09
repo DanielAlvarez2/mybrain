@@ -131,6 +131,7 @@ export default function Birthdays(){
                                     Year:<br/>
                                     <input  type='number' 
                                             name='year'
+                                            style={{padding:'0 2px'}}
                                             min='1900' 
                                             max={new Date().getFullYear()} />
                                     <br/>
