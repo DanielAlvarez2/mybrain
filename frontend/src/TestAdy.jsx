@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import './Ady.css'
+import NavbarAdy from './components/NavbarAdy.jsx'
 
-export default function TestAdy() {
+export default function Ady() {
     async function createNewNote(formData){
         await fetch(`${BASE_URL}/api/note`, {   method:'POST', 
                                                 headers:{'Content-Type':'application/json'},
@@ -59,13 +60,18 @@ export default function TestAdy() {
     <>
       <div className='wrapper'>
         <div className='adys-phone'>
-            <h1 style={{display:'flex',
-                        alignItems:'center',
-                        justifyContent:'center'}}>
-                <img src='./brain.jpeg' width='60px' />
-                <span>MYbrain</span>
-            </h1>
-            <hr/><br/>
+                    <h1 style={{display:'flex',
+                                gap:'10px',
+                                marginBottom:'5px',
+                                alignItems:'center',
+                                justifyContent:'center'}}>
+                        <img src='./brain.jpeg' width='60px' />
+                        <span>MYbrain</span>
+                    </h1>
+                    <hr/>     
+            
+              <NavbarAdy />
+            
             <h2>{Date().slice(0,10)}</h2><br/>
             {
                 Date().slice(0,3) == 'Sat' || Date().slice(0,3) == 'Sun' && 
