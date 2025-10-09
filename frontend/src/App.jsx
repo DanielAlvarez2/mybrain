@@ -8,14 +8,7 @@ export default function App() {
                     'http://localhost:1111'
 
   const [notes, setNotes] = useState([])
-  const [birthdays, setBirthdays] = useState([])
 
-  const getBirthdays = ()=>{
-    fetch(`${BASE_URL}/api/birthday`)
-      .then(res=>res.json())
-      .then(json=>setBirthdays(json))
-      .catch(err=>console.log(err))
-  }
   const getNotes = ()=>{
     fetch(`${BASE_URL}/api/note`)
       .then(res=>res.json())
@@ -24,7 +17,6 @@ export default function App() {
   }
 
   useEffect(()=>getNotes(),[])
-  useEffect(()=>getBirthdays(),[])
 
 
   function reloadPage(){
