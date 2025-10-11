@@ -24,6 +24,7 @@ export default function Appointments() {
             
               <NavbarAdy />
             
+            <h2>Appointments</h2>
             <h2>{Date().slice(0,10)}</h2><br/>
 
             <form action={createNewAppointment}>
@@ -135,7 +136,13 @@ export default function Appointments() {
                     Description: (optional)
                     <textarea   name='description' 
                     ></textarea>
-                </label>
+                </label><br/><br/>
+
+                <label>
+                    AFTER this event occurs:<br/>
+                    <input type='radio' value='save' name='save' required /> SAVE it to History for future reference<br/>
+                    <input type='radio' value='delete' name='save' /> DELETE it from History
+                </label><br/><br/>
 
                 <input  type='submit' 
                         value='Upload'
