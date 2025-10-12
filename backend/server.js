@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const Note = require('./models/Note.js')
 const Birthday = require('./models/Birthday.js')
+const Appointment = require('./models/Appointment.js')
 
 const app = express()
 app.use(express.json())
@@ -18,7 +19,40 @@ console.log('');
         console.log(err)
     }
 })()
+app.post('/api/appointment', async(req,res)=>{
+    try{
+        let monthNum;
+        if (req.body.month == 'Jan'){monthNum = 1
+        }else if(req.body.month == 'Feb'){monthNum=2
+        }else if(req.body.month == 'Mar'){monthNum=3
+        }else if(req.body.month == 'Apr'){monthNum=4
+        }else if(req.body.month == 'May'){monthNum=5
+        }else if(req.body.month == 'Jun'){monthNum=6
+        }else if(req.body.month == 'Jul'){monthNum=7
+        }else if(req.body.month == 'Aug'){monthNum=8
+        }else if(req.body.month == 'Sep'){monthNum=9
+        }else if(req.body.month == 'Oct'){monthNum=10
+        }else if(req.body.month == 'Nov'){monthNum=11
+        }else if(req.body.month == 'Dec'){monthNum=12}
 
+        await Appointment.create({
+            title:req.body.title,
+            description:req.body.description,
+            year:req.body.year,
+            month:req.body.month,
+            monthNum,
+            day:req.body.day,
+            hour:req.body.hour,
+            minute:req.body.minute,
+            ampm:req.body.ampm,
+            keep:req.body.keep == 'keep' ? true : false
+        })
+        console.log('Appointment Created')
+        res.json('Appointment Created')
+    }catch(err){
+        console.log(err)
+    }
+})
 app.post('/api/birthday', async(req,res)=>{
     try{
         let monthNum;

@@ -9,7 +9,8 @@ const AppointmentSchema = new mongoose.Schema({
     day: {type:Number},
     hour: {type:Number},
     minute: {type:Number},
-    save: {type:Boolean}
+    ampm:{type:String},
+    keep: {type:Boolean}
 })
 
-MediaSourceHandle.exports = mongoose.model('Appointment', AppointmentSchema)
+module.exports = mongoose.model('Appointment', AppointmentSchema)

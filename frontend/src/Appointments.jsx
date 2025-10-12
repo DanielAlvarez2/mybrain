@@ -4,9 +4,28 @@ import NavbarAdy from './components/NavbarAdy.jsx'
 
 export default function Appointments() {
 
-    function createNewAppointment(){
+async function createNewAppointment(formData){
 
-    }
+      const BASE_URL =  (process.env.NODE_ENV == 'production') ? 
+                    'https://mybrain-8bpo.onrender.com' :
+                    'http://localhost:1111'
+
+    await fetch(`${BASE_URL}/api/appointment`,{ method:'POST', 
+                                                headers:{'Content-Type':'application/json'},
+                                                body:JSON.stringify({
+                                                    title:formData.get('title'),
+                                                    description:formData.get('description'),
+                                                    year:formData.get('year'),
+                                                    month:formData.get('month'),
+                                                    day:formData.get('day'),
+                                                    hour:formData.get('hour'),
+                                                    minute:formData.get('minute'),
+                                                    keep:formData.get('keep')
+        })})
+        .then(alert('Appointment Created'))
+        .catch(err=>console.log(err))
+
+}
 
   return (
     <>
@@ -44,7 +63,7 @@ export default function Appointments() {
                 <div style={{display:'flex'}}>
                     <label>
                         Month:<br/>
-                        <select required defaultValue=''>
+                        <select name='month' required defaultValue=''>
                             <option value='' disabled>Select...</option>
                             <option>Jan</option>
                             <option>Feb</option>
@@ -63,7 +82,7 @@ export default function Appointments() {
                     
                     <label>
                         Day:<br/>
-                        <select required defaultValue=''>
+                        <select name='day' required defaultValue=''>
                             <option value='' disabled>Select...</option>
                             <option>1</option>
                             <option>2</option>
@@ -101,7 +120,7 @@ export default function Appointments() {
                     
                     <label>
                         Year:<br/>
-                        <select required defaultValue=''>
+                        <select name='year' required defaultValue=''>
                             <option value='' disabled>Select...</option>
                             <option>{Date().slice(11,15)}</option>
                             <option>{Number(Date().slice(11,15))+1}</option>
@@ -111,12 +130,14 @@ export default function Appointments() {
                     <label>
                         Time:<br/>
                         <input  type='text' 
+                                name='hour'
                                 size='1' 
                                 required
                                 maxLength={2}
                                 style={{textAlign:'right',width:'3ch'}} />
                         :
                         <input  type='text'
+                                name='minute'
                                 maxLength={2}
                                 required
                                 style={{textAlign:'left',width:'3ch'}} 
@@ -124,7 +145,7 @@ export default function Appointments() {
                     </label>
 
                     <div><br/>
-                        <select required defaultValue=''>
+                        <select name='ampm' required defaultValue=''>
                             <option disabled value=''>am/pm</option>
                             <option>am</option>
                             <option>pm</option>
@@ -141,8 +162,8 @@ export default function Appointments() {
 
                 <label>
                     AFTER this event occurs:<br/>
-                    <input type='radio' value='save' name='save' required /> SAVE it to History for future reference<br/>
-                    <input type='radio' value='delete' name='save' /> DELETE it from History
+                    <input type='radio' value='keep' name='keep' required /> SAVE it to History for future reference<br/>
+                    <input type='radio' value='delete' name='keep' /> DELETE it from History
                 </label><br/><br/>
 
                 <input  type='submit' 
