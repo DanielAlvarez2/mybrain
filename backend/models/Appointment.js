@@ -8,6 +8,7 @@ const AppointmentSchema = new mongoose.Schema({
     monthNum: {type:Number},
     day: {type:Number},
     hour: {type:Number},
+    militaryHour: {type:Number},
     minute: {type:Number},
     ampm:{type:String},
     keep: {type:Boolean}
