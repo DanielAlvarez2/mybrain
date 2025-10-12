@@ -28,7 +28,8 @@ export default function Appointments() {
             <h2>{Date().slice(0,10)}</h2><br/>
 
             <form action={createNewAppointment}>
-                Add a New Appointment:<br/><br/>
+                <h3>Add a New Appointment</h3>
+                <br/>
                 
                 <label>
                     Title:<br/>

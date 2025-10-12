@@ -16,6 +16,8 @@ export default function App() {
       .then(json=>setBirthdays(json))
       .catch(err=>console.log(err))
   }
+  useEffect(()=>getBirthdays(),[])
+
   const getNotes = ()=>{
     fetch(`${BASE_URL}/api/note`)
       .then(res=>res.json())
@@ -24,7 +26,6 @@ export default function App() {
   }
 
   useEffect(()=>getNotes(),[])
-  useEffect(()=>getBirthdays(),[])
 
 
   function reloadPage(){
