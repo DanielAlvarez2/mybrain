@@ -8,6 +8,8 @@ export default function Birthdays(){
                         'http://localhost:1111'
 
     const [birthdays, setBirthdays] = useState([])
+    const [page, setPage] = useState('')
+    useEffect(()=>setPage('Birthdays'))
     
     const getBirthdays = ()=>{
         fetch(`${BASE_URL}/api/birthday`)
@@ -50,7 +52,7 @@ export default function Birthdays(){
                         <span>MYbrain</span>
                     </h1>
                     <hr/> 
-                    <NavbarAdy />   
+                    <NavbarAdy page={page} />   
                     <h2>Birthdays</h2>
                     <br/>
 

@@ -26,6 +26,10 @@ export default function Ady() {
 
   const [notes, setNotes] = useState([])
 
+  const [page, setPage] = useState('')
+
+  useEffect(()=>setPage('Home'))
+
   const getNotes = ()=>{
     fetch(`${BASE_URL}/api/note`)
       .then(res=>res.json())
@@ -70,7 +74,7 @@ export default function Ady() {
                     </h1>
                     <hr/>     
             
-              <NavbarAdy />
+              <NavbarAdy page={page} />
             
             <h2>{Date().slice(0,10)}</h2><br/>
             {

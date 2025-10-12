@@ -6,3 +6,6 @@
 .navbar-ady a{
     cursor:pointer;
 }
+.current-page{
+    border-bottom: 3px solid red;
+}
