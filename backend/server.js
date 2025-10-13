@@ -42,6 +42,18 @@ app.post('/api/appointment', async(req,res)=>{
             militaryHour = Number(militaryHour) + 12
         }
 
+        let sequence;
+        let sequenceYear = req.body.year
+        let sequenceMonth = monthNum
+        let sequenceDay = req.body.day
+        let sequenceHour = militaryHour
+        let sequenceMinute = req.body.minute
+        if (monthNum < 10) sequenceMonth = '0' + monthNum
+        if (sequenceDay < 10) sequenceDay = '0' + sequenceDay
+        if (sequenceHour < 10) sequenceHour = '0' + sequenceHour
+        if (sequenceMinute < 10) sequenceMinute = '0' + sequenceMinute
+        sequence = sequenceYear + sequenceMonth + sequenceDay + sequenceHour + sequenceMinute
+
         await Appointment.create({
             title:req.body.title,
             description:req.body.description,
@@ -53,10 +65,20 @@ app.post('/api/appointment', async(req,res)=>{
             militaryHour,
             minute:req.body.minute,
             ampm:req.body.ampm,
-            keep:req.body.keep == 'keep' ? true : false
+            keep:req.body.keep == 'keep' ? true : false,
+            sequence
         })
         console.log('Appointment Created')
         res.json('Appointment Created')
+    }catch(err){
+        console.log(err)
+    }
+})
+app.get('/api/appointments', async(req,res)=>{
+    try{
+        const allAppointments = await Appointment.find().sort({sequence:1})
+        console.log('Get All Birthdays')
+        res.json(allAppointments)
     }catch(err){
         console.log(err)
     }
@@ -102,6 +124,7 @@ app.delete('/api/birthday/:id', async(req,res)=>{
 app.get('/api/birthday', async(req,res)=>{
     try{
         const allBirthdays = await Birthday.find().sort({monthNum:1, day:1})
+        console.log('Get All Birthdays')
         res.json(allBirthdays)
     }catch(err){
         console.log(err)

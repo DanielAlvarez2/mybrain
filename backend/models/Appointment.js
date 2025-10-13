@@ -11,7 +11,8 @@ const AppointmentSchema = new mongoose.Schema({
     militaryHour: {type:Number},
     minute: {type:Number},
     ampm:{type:String},
-    keep: {type:Boolean}
-})
+    keep: {type:Boolean},
+    sequence:{type:Number}
+},{timestamps:true})
 
 module.exports = mongoose.model('Appointment', AppointmentSchema)

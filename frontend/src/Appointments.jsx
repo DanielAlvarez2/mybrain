@@ -4,29 +4,38 @@ import NavbarAdy from './components/NavbarAdy.jsx'
 
 export default function Appointments() {
 
-async function createNewAppointment(formData){
+    const BASE_URL =    (process.env.NODE_ENV == 'production') ? 
+                        'https://mybrain-8bpo.onrender.com' :
+                        'http://localhost:1111'
 
-      const BASE_URL =  (process.env.NODE_ENV == 'production') ? 
-                    'https://mybrain-8bpo.onrender.com' :
-                    'http://localhost:1111'
+    const [appointments, setAppointments] = useState([])
+    useEffect(()=>getAppointments(),[])
 
-    await fetch(`${BASE_URL}/api/appointment`,{ method:'POST', 
-                                                headers:{'Content-Type':'application/json'},
-                                                body:JSON.stringify({
-                                                    title:formData.get('title'),
-                                                    description:formData.get('description'),
-                                                    year:formData.get('year'),
-                                                    month:formData.get('month'),
-                                                    day:formData.get('day'),
-                                                    hour:formData.get('hour'),
-                                                    minute:formData.get('minute'),
-                                                    ampm:formData.get('ampm'),
-                                                    keep:formData.get('keep')
+    async function createNewAppointment(formData){
+        await fetch(`${BASE_URL}/api/appointment`,{ method:'POST', 
+                                                    headers:{'Content-Type':'application/json'},
+                                                    body:JSON.stringify({
+                                                        title:formData.get('title'),
+                                                        description:formData.get('description'),
+                                                        year:formData.get('year'),
+                                                        month:formData.get('month'),
+                                                        day:formData.get('day'),
+                                                        hour:formData.get('hour'),
+                                                        minute:formData.get('minute'),
+                                                        ampm:formData.get('ampm'),
+                                                        keep:formData.get('keep')
         })})
         .then(alert('Appointment Created'))
         .catch(err=>console.log(err))
+    }
 
-}
+    function getAppointments(){
+        fetch(`${BASE_URL}/api/appointments`)
+            .then(res=>res.json())
+            .then(json=>setAppointments(json))
+            .catch(err=>console.log(err))
+    }
+
 
   return (
     <>
@@ -252,6 +261,14 @@ async function createNewAppointment(formData){
                                 borderRadius:'5px'
                         }} />
             </form>
+
+            {appointments.map(appointment=>{
+                return(
+                    <div key={appointment._id}>
+                        {appointment.title}<br/>
+                    </div>
+                )
+            })}
 
         </div>{/* .adys-phone */}
       </div>{/* .wrapper */}
