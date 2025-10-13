@@ -49,7 +49,9 @@ export default function History() {
                         {appointment.title}<br/>
                         {appointment.description && <>appointment.description<br/></>}
                         {appointment.keep ? 'SAVE in History' : 'DELETE from History'}
-                        <br/><br/>
+                        <br/>
+                        <span className='history-btn'>DELETE</span>
+                        <br/>
                     </div>
                 )
             })}
