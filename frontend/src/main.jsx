@@ -8,6 +8,7 @@ import TestAdy from './TestAdy.jsx'
 import TestDad from './TestDad.jsx'
 import Birthdays from './Birthdays.jsx'
 import Appointments from './Appointments.jsx'
+import History from './History.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -19,6 +20,7 @@ createRoot(document.getElementById('root')).render(
         <Route path='/test-ady' element={<TestAdy />} />
         <Route path='/birthdays' element={<Birthdays />} />
         <Route path='/appointments' element={<Appointments />} />
+        <Route path='/history' element={<History />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,

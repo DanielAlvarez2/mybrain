@@ -77,8 +77,17 @@ app.post('/api/appointment', async(req,res)=>{
 app.get('/api/appointments', async(req,res)=>{
     try{
         const allAppointments = await Appointment.find().sort({sequence:1})
-        console.log('Get All Birthdays')
+        console.log('Get All Appointments')
         res.json(allAppointments)
+    }catch(err){
+        console.log(err)
+    }
+})
+app.get('/api/history', async(req,res)=>{
+    try{
+        const history = await Appointment.find().sort({sequence:-1})
+        console.log('Get History')
+        res.json(history)
     }catch(err){
         console.log(err)
     }
