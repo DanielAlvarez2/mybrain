@@ -56,6 +56,14 @@ export default function Appointments() {
             <h2>Appointments</h2>
             <h2>{Date().slice(0,10)}</h2><br/>
 
+            {appointments.map(appointment=>{
+                return(
+                    <div key={appointment._id}>
+                        {appointment.title}<br/><br/>
+                    </div>
+                )
+            })}
+
             <form action={createNewAppointment}>
                 <h3>Add a New Appointment</h3>
                 <br/>
@@ -262,13 +270,6 @@ export default function Appointments() {
                         }} />
             </form>
 
-            {appointments.map(appointment=>{
-                return(
-                    <div key={appointment._id}>
-                        {appointment.title}<br/>
-                    </div>
-                )
-            })}
 
         </div>{/* .adys-phone */}
       </div>{/* .wrapper */}
