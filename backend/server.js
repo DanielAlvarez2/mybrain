@@ -35,6 +35,13 @@ app.post('/api/appointment', async(req,res)=>{
         }else if(req.body.month == 'Nov'){monthNum=11
         }else if(req.body.month == 'Dec'){monthNum=12}
 
+        let militaryHour = req.body.hour
+        if(militaryHour == '12' && req.body.ampm == 'am') {
+            militaryHour = 0
+        }else if(req.body.ampm == 'pm') {
+            militaryHour = Number(militaryHour) + 12
+        }
+
         await Appointment.create({
             title:req.body.title,
             description:req.body.description,
@@ -43,6 +50,7 @@ app.post('/api/appointment', async(req,res)=>{
             monthNum,
             day:req.body.day,
             hour:req.body.hour,
+            militaryHour,
             minute:req.body.minute,
             ampm:req.body.ampm,
             keep:req.body.keep == 'keep' ? true : false
