@@ -59,12 +59,12 @@ export default function Appointments() {
             {appointments.map(appointment=>{
                 return(
                     <div key={appointment._id}>
-                        {appointment.month} {appointment.day} {appointment.year} &nbsp;
+                        <b>{appointment.month} {appointment.day} {appointment.year} &nbsp;
                         {appointment.hour}:
                         {appointment.minute < 10 ? '0'+appointment.minute : appointment.minute}
-                        {appointment.ampm}<br/>
+                        {appointment.ampm}</b><br/>
                         {appointment.title}<br/>
-                        {appointment.description}<br/>
+                        {appointment.description && <>appointment.description<br/></>}
                         {appointment.keep ? 'SAVE in History' : 'DELETE from History'}
                         <br/><br/>
                     </div>
@@ -261,8 +261,15 @@ export default function Appointments() {
 
                 <label>
                     AFTER this event occurs:<br/>
-                    <input type='radio' value='keep' name='keep' required /> SAVE it to History for future reference<br/>
-                    <input type='radio' value='delete' name='keep' /> DELETE it from History
+                    <input  type='radio' 
+                            value='keep' 
+                            name='keep'
+                            style={{cursor:'pointer'}} 
+                            required /> SAVE it to History for future reference<br/>
+                    <input  type='radio' 
+                            value='delete' 
+                            style={{cursor:'pointer'}}
+                            name='keep' /> DELETE it from History
                 </label><br/><br/>
 
                 <input  type='submit' 
