@@ -51,7 +51,7 @@ app.post('/api/appointment', async(req,res)=>{
         if (monthNum < 10) sequenceMonth = '0' + monthNum
         if (sequenceDay < 10) sequenceDay = '0' + sequenceDay
         if (sequenceHour < 10) sequenceHour = '0' + sequenceHour
-        if (sequenceMinute < 10) sequenceMinute = '0' + sequenceMinute
+        sequenceMinute = req.body.minute
         sequence = sequenceYear + sequenceMonth + sequenceDay + sequenceHour + sequenceMinute
 
         await Appointment.create({

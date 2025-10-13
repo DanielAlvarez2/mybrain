@@ -59,7 +59,14 @@ export default function Appointments() {
             {appointments.map(appointment=>{
                 return(
                     <div key={appointment._id}>
-                        {appointment.title}<br/><br/>
+                        {appointment.month} {appointment.day} {appointment.year} &nbsp;
+                        {appointment.hour}:
+                        {appointment.minute < 10 ? '0'+appointment.minute : appointment.minute}
+                        {appointment.ampm}<br/>
+                        {appointment.title}<br/>
+                        {appointment.description}<br/>
+                        {appointment.keep ? 'SAVE in History' : 'DELETE from History'}
+                        <br/><br/>
                     </div>
                 )
             })}
