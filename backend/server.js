@@ -156,6 +156,8 @@ app.put('/api/birthday/:id', async(req,res)=>{
                                                                 day: req.body.day,
                                                                 year: req.body.year
         })
+        console.log('Birthday Updated')
+        res.json('Birthday Updated')
     }catch(err){
         console.log(err)
     }

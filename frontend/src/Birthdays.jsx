@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react'
 import './Birthdays.css'
 import NavbarAdy from './components/NavbarAdy.jsx'
+import BirthdayDisplay from './components/BirthdayDisplay.jsx'
 
 export default function Birthdays(){
     const BASE_URL =    (process.env.NODE_ENV == 'production') ? 
@@ -32,6 +33,23 @@ export default function Birthdays(){
         })
         .then(getBirthdays)
         .catch(err=>console.log(err))
+    }
+
+    async function editBirthday(formData){
+        await fetch(`${BASE_URL}/api/birthday/${formData.get('id')}`,{  method:'PUT',
+                                                        headers:{'Content-Type':'application/json'},
+                                                        body: JSON.stringify({
+                                                            name:formData.get('name'),
+                                                            month:formData.get('month'),
+                                                            day:formData.get('day'),
+                                                            year:formData.get('year')
+                                                        })
+        })
+        .then(getBirthdays)
+        .catch(err=>console.log(err))
+    }
+    function displayBdayEdit(id){
+        ()=>getBirthdays()
     }
 
     async function deleteBday(id){
@@ -91,7 +109,7 @@ export default function Birthdays(){
                                         <option>Dec</option>
                                     </select>
                                 </label>
-                                <br/>
+                                
                                 <label>
                                     Day:<br/>
                                     <select defaultValue='' name='day' required>
@@ -128,7 +146,8 @@ export default function Birthdays(){
                                         <option>30</option>
                                         <option>31</option>
                                     </select>
-                                </label><br/>
+                                </label>
+
                                 <label>
                                     Year:<br/>
                                     <input  type='number' 
@@ -164,17 +183,11 @@ export default function Birthdays(){
                     {birthdays.map(bday=>{
                         return(
                             <div key={bday._id}>
-                                <div className='display-bday' style={{display:'flex',gap:'5px'}}>
-                                    <span style={{width:'12ch'}}>{bday.month} {bday.day < 10 && '0'}{bday.day} {bday.year ? bday.year : '------'}</span>
-                                    <span>{bday.name}</span>
-                                </div>{/* .display-bday */}
+                                <BirthdayDisplay    key={bday._id} 
+                                                    bday={bday}
+                                                    getBirthdays={getBirthdays} 
+                                                    editBirthday={editBirthday} />
                                 
-                                <span   className='bday-btn'
-                                        onClick={()=>deleteBday(bday._id)} 
-                                        style={{color:'white', 
-                                                background:'red'
-                                }} >DELETE</span>
-                                <br/><br/>
                             </div>
                         )
                     })}
