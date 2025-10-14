@@ -150,9 +150,11 @@ export default function Ady() {
 
             <hr/>
             <br/>
-            <form action={createNewNote}>
+            <form style={{background:'lightgrey',
+                          borderRadius:'10px',
+                          padding:'7px'}} action={createNewNote}>
                 <label>
-                    Add a New Note:<br/>
+                    <h3>Add a New Note:</h3>
                     <textarea   name='note' 
                                 required
                     ></textarea>

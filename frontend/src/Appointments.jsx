@@ -73,7 +73,10 @@ export default function Appointments() {
                 )
             })}
 
-            <form action={createNewAppointment}>
+            <form   action={createNewAppointment} 
+                    style={{background:'lightgrey',
+                            borderRadius:'10px',
+                            padding:'5px'}} >
                 <h3>Add a New Appointment</h3>
                 <br/>
                 
