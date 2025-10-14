@@ -8,6 +8,7 @@
   border:1px solid red;
   padding:10px;
   position:relative;
+  font-size: 18px;
 }
 #modal{
   width:100%;

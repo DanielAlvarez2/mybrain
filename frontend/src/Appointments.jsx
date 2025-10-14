@@ -67,11 +67,30 @@ export default function Appointments() {
                         {appointment.description && <>appointment.description<br/></>}
                         {appointment.keep ? 'SAVE in History' : 'DELETE from History'}
                         <br/>
-                        <span style={{background:'red'}} className='event-btn'>DELETE</span>
-                        <br/>
+                        <span   style={{background:'red',
+                                        color:'white',
+                                        cursor:'pointer',
+                                        fontSize:'10px'}} 
+                                className='event-btn'>DELETE</span>
+                        <br/><br/>
                     </div>
                 )
             })}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             <form   action={createNewAppointment} 
                     style={{background:'lightgrey',
