@@ -1,3 +1,6 @@
 #hour option{
     text-align-last: right;
 }
+.edit-appointment-forms{
+    display:none;
+}

@@ -6,3 +6,4 @@ oleademo.com
 set up email    
 display 'current page' link in nav with styling  
 change getAll() endpoints to /notes and /birthdays PLURAL  
+add clearForm / resetForm buttons  

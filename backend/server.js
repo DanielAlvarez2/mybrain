@@ -83,6 +83,15 @@ app.get('/api/appointments', async(req,res)=>{
         console.log(err)
     }
 })
+app.delete('/api/appointment/:id',async(req,res)=>{
+    try{
+        await Appointment.findByIdAndDelete(req.params.id)
+        console.log('Appointment Deleted')
+        res.json('Appointment Deleted')
+    }catch(err){
+        console.log(err)
+    }
+})
 app.get('/api/history', async(req,res)=>{
     try{
         const history = await Appointment.find().sort({sequence:-1})
@@ -150,9 +159,24 @@ app.get('/api/birthday/:id', async(req,res)=>{
 })
 app.put('/api/birthday/:id', async(req,res)=>{
     try{
+        let monthNum;
+        if (req.body.month == 'Jan'){monthNum = 1
+        }else if(req.body.month == 'Feb'){monthNum=2
+        }else if(req.body.month == 'Mar'){monthNum=3
+        }else if(req.body.month == 'Apr'){monthNum=4
+        }else if(req.body.month == 'May'){monthNum=5
+        }else if(req.body.month == 'Jun'){monthNum=6
+        }else if(req.body.month == 'Jul'){monthNum=7
+        }else if(req.body.month == 'Aug'){monthNum=8
+        }else if(req.body.month == 'Sep'){monthNum=9
+        }else if(req.body.month == 'Oct'){monthNum=10
+        }else if(req.body.month == 'Nov'){monthNum=11
+        }else if(req.body.month == 'Dec'){monthNum=12}
+
         await Birthday.findByIdAndUpdate({_id:req.params.id},{
                                                                 name: req.body.name,
                                                                 month: req.body.month,
+                                                                monthNum,
                                                                 day: req.body.day,
                                                                 year: req.body.year
         })
