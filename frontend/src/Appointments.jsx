@@ -31,7 +31,16 @@ export default function Appointments() {
     }
 
     function displayEditAppointmentForm(id){
-        alert('Display Edit Appointment Form')
+        // alert('Display Edit Appointment Form')
+        document.querySelectorAll('.edit-appointment-forms').forEach(event=>event.style.display = 'none')
+        document.querySelector(`#edit-appointment-${id}`).style.display = 'block'
+        document.querySelectorAll(`.appointment-control-btns`).forEach(event=>event.style.display = 'block')
+        document.querySelector(`#appointment-control-btns-${id}`).style.display = 'none'
+    }
+
+    function closeEditAppointmentForm(id){
+        document.querySelector(`#edit-appointment-${id}`).style.display = 'none'
+        document.querySelector(`#appointment-control-btns-${id}`).style.display = 'block'
     }
 
     function getAppointments(){
@@ -299,26 +308,29 @@ export default function Appointments() {
                             </label><br/><br/>
 
                             <input  type='submit' 
-                                    value='Upload'
-                                    style={{padding:'5px 15px',
-                                            background:'green',
+                                    value='UPDATE'
+                                    className='event-btn'
+                                    style={{background:'green',
                                             color:'white',
-                                            cursor:'pointer',
-                                            border:'none',
-                                            fontSize:'20px',
-                                            borderRadius:'5px'
                                     }} />
-
+                            <span   className='event-btn' 
+                                    onClick={()=>closeEditAppointmentForm(appointment._id)}
+                                    style={{background:'red',
+                                            color:'white'}}>CANCEL</span>
 
                         </div>{/* .edit-appointment-forms */}
-                        <span   style={{background:'red',
-                                        color:'white'}} 
-                                onClick={()=>deleteAppointment(appointment._id)}
-                                className='event-btn'>DELETE</span>
-                        <span   style={{background:'blue',
-                                        color:'white'}} 
-                                onClick={()=>displayEditAppointmentForm(appointment._id)}
-                                className='event-btn'>EDIT</span>
+
+                        <div    className='appointment-control-btns' 
+                                id={`appointment-control-btns-${appointment._id}`}>
+                            <span   style={{background:'red',
+                                            color:'white'}} 
+                                    onClick={()=>deleteAppointment(appointment._id)}
+                                    className='event-btn'>DELETE</span>
+                            <span   style={{background:'blue',
+                                            color:'white'}} 
+                                    onClick={()=>displayEditAppointmentForm(appointment._id)}
+                                    className='event-btn'>EDIT</span>
+                        </div>{/* .appointment-control-btns */}                                    
                         <br/><br/>
                     </div>
                 )
