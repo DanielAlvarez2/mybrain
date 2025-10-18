@@ -31,7 +31,23 @@ export default function Appointments() {
     }
 
     async function editAppointment(formData){
-        alert('editAppointment()')
+        console.log(formData.get('id'))
+        await fetch(`${BASE_URL}/api/appointment/${formData.get('id')}`,{   method:'PUT',
+                                                                            headers:{'Content-Type':'application/json'},
+                                                                            body:JSON.stringify({
+                                                                                title:formData.get('title'),
+                                                                                description:formData.get('description'),
+                                                                                year:formData.get('year'),
+                                                                                month:formData.get('month'),
+                                                                                day:formData.get('day'),
+                                                                                hour:formData.get('hour'),
+                                                                                minute:formData.get('minute'),
+                                                                                ampm:formData.get('ampm'),
+                                                                                keep:formData.get('keep')
+                                                                            })
+        })
+        .then(getAppointments)
+        .catch(err=>console.log(err))
     }
 
     function handleSubmit(e){
@@ -95,6 +111,10 @@ export default function Appointments() {
                         {appointment.keep ? 'SAVE in History' : 'DELETE from History'}
                         <br/>
                         <form onSubmit={handleSubmit}>
+
+                            <input  type='hidden' 
+                                    name='id'
+                                    value={appointment._id} />
                             <div    className='edit-appointment-forms' 
                                     style={{background:'lightgrey',
                                             borderRadius:'10px',

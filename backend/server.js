@@ -74,6 +74,62 @@ app.post('/api/appointment', async(req,res)=>{
         console.log(err)
     }
 })
+app.put('/api/appointment/:id', async(req,res)=>{
+    try{
+        let monthNum;
+        if (req.body.month == 'Jan'){monthNum = 1
+        }else if(req.body.month == 'Feb'){monthNum=2
+        }else if(req.body.month == 'Mar'){monthNum=3
+        }else if(req.body.month == 'Apr'){monthNum=4
+        }else if(req.body.month == 'May'){monthNum=5
+        }else if(req.body.month == 'Jun'){monthNum=6
+        }else if(req.body.month == 'Jul'){monthNum=7
+        }else if(req.body.month == 'Aug'){monthNum=8
+        }else if(req.body.month == 'Sep'){monthNum=9
+        }else if(req.body.month == 'Oct'){monthNum=10
+        }else if(req.body.month == 'Nov'){monthNum=11
+        }else if(req.body.month == 'Dec'){monthNum=12}
+
+        let militaryHour = req.body.hour
+        if(militaryHour == '12' && req.body.ampm == 'am') {
+            militaryHour = 0
+        }else if(req.body.ampm == 'pm') {
+            militaryHour = Number(militaryHour) + 12
+        }
+
+        let sequence;
+        let sequenceYear = req.body.year
+        let sequenceMonth = monthNum
+        let sequenceDay = req.body.day
+        let sequenceHour = militaryHour
+        let sequenceMinute = req.body.minute
+        if (monthNum < 10) sequenceMonth = '0' + monthNum
+        if (sequenceDay < 10) sequenceDay = '0' + sequenceDay
+        if (sequenceHour < 10) sequenceHour = '0' + sequenceHour
+        sequenceMinute = req.body.minute
+        sequence = sequenceYear + sequenceMonth + sequenceDay + sequenceHour + sequenceMinute
+        
+        let keep = `req.body.keep-${req.params.id}`
+
+        await Appointment.findByIdAndUpdate({_id:req.params.id},{   title:req.body.title,
+                                                                    description:req.body.description,
+                                                                    year:req.body.year,
+                                                                    month:req.body.month,
+                                                                    monthNum,
+                                                                    day:req.body.day,
+                                                                    hour:req.body.hour,
+                                                                    militaryHour,
+                                                                    minute:req.body.minute,
+                                                                    ampm:req.body.ampm,
+                                                                    sequence,
+                                                                    keep:keep == 'keep' ? true : false
+        })
+        console.log('Appointment Updated')
+        res.json('Appointment Updated')
+    }catch(err){
+        console.log(err)
+    }
+})
 app.get('/api/appointments', async(req,res)=>{
     try{
         const allAppointments = await Appointment.find().sort({sequence:1})
