@@ -131,7 +131,7 @@ export default function BirthdayDisplay(props){
  
                                 <div className='bday-btn-row' id={`bday-btn-row-${props.bday._id}`}>
                                     <span   className='bday-btn'
-                                            onClick={()=>deleteBday(props.bday._id)} 
+                                            onClick={()=>props.deleteBday(props.bday._id)} 
                                             style={{color:'white', 
                                                     background:'red'
                                     }} >DELETE</span>

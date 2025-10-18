@@ -186,6 +186,7 @@ export default function Birthdays(){
                                 <BirthdayDisplay    key={bday._id} 
                                                     bday={bday}
                                                     getBirthdays={getBirthdays} 
+                                                    deleteBday={deleteBday}
                                                     editBirthday={editBirthday} />
                                 
                             </div>

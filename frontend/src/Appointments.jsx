@@ -31,7 +31,7 @@ export default function Appointments() {
     }
 
     async function editAppointment(formData){
-        console.log(formData.get('id'))
+        // console.log(formData.get('id'))
         await fetch(`${BASE_URL}/api/appointment/${formData.get('id')}`,{   method:'PUT',
                                                                             headers:{'Content-Type':'application/json'},
                                                                             body:JSON.stringify({
