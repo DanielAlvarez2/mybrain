@@ -51,7 +51,7 @@ export default function History() {
                         {appointment.keep ? 'SAVE in History' : 'DELETE from History'}
                         <br/>
                         <span className='history-btn'>DELETE</span>
-                        <br/>
+                        <br/><br/>
                     </div>
                 )
             })}

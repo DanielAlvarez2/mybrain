@@ -109,8 +109,6 @@ app.put('/api/appointment/:id', async(req,res)=>{
         sequenceMinute = req.body.minute
         sequence = sequenceYear + sequenceMonth + sequenceDay + sequenceHour + sequenceMinute
         
-        let keep = `req.body.keep-${req.params.id}`
-
         await Appointment.findByIdAndUpdate({_id:req.params.id},{   title:req.body.title,
                                                                     description:req.body.description,
                                                                     year:req.body.year,
@@ -122,7 +120,7 @@ app.put('/api/appointment/:id', async(req,res)=>{
                                                                     minute:req.body.minute,
                                                                     ampm:req.body.ampm,
                                                                     sequence,
-                                                                    keep:keep == 'keep' ? true : false
+                                                                    keep:req.body.keep == 'keep' ? true : false
         })
         console.log('Appointment Updated')
         res.json('Appointment Updated')
