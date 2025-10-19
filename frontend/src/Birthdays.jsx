@@ -36,6 +36,7 @@ export default function Birthdays(){
     }
 
     async function editBirthday(formData){
+        console.log(formData)
         await fetch(`${BASE_URL}/api/birthday/${formData.get('id')}`,{  method:'PUT',
                                                         headers:{'Content-Type':'application/json'},
                                                         body: JSON.stringify({

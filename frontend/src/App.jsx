@@ -25,12 +25,12 @@ export default function App() {
       .catch(err=>console.log(err))
   }
 
-  useEffect(()=>getNotes(),[])
+  useEffect(()=>{
+    getNotes()
+    const interval = setInterval(()=>getNotes(),1800000)
+    return ()=> clearInterval(interval)
+  },[])
 
-
-  function reloadPage(){
-    setTimeout(()=>window.location.reload(),1800000)
-  }
   return (
     <>
       
@@ -83,9 +83,6 @@ export default function App() {
             )
           })}
 
-          {
-            reloadPage()
-          }       
         </div>{/* #dads-phone */}
       </div>{/* .wrapper */}
     </>
