@@ -119,8 +119,8 @@ export default function Appointments() {
 
             {appointments.map(appointment=>{
                 return(
-
-                            <div key={appointment._id}>
+                    appointment.sequence > todaySequence && 
+                    <div key={appointment._id}>
                                 <b>{appointment.month} {appointment.day} {appointment.year} &nbsp;
                                 {appointment.hour}:
                                 {appointment.minute < 10 ? '0'+appointment.minute : appointment.minute}
