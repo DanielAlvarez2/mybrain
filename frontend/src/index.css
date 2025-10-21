@@ -16,6 +16,14 @@ textarea{
     border:1px solid blue;
     padding:10px;
 }
+.dads-phone{
+  width:384px;
+  min-height:832px;
+  border:1px solid red;
+  padding:10px;
+  position:relative;
+  font-size: 18px;
+}
 .note-btn,
 .bday-btn,
 .event-btn{

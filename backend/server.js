@@ -35,12 +35,20 @@ app.post('/api/appointment', async(req,res)=>{
         }else if(req.body.month == 'Nov'){monthNum=11
         }else if(req.body.month == 'Dec'){monthNum=12}
 
-        let militaryHour = req.body.hour
-        if(militaryHour == '12' && req.body.ampm == 'am') {
-            militaryHour = 0
-        }else if(req.body.ampm == 'pm') {
-            militaryHour = Number(militaryHour) + 12
+        let militaryHour
+        if (req.body.hour == '99'){
+            militaryHour = 99
+        }else{
+            militaryHour = req.body.hour
+            if(militaryHour == '12' && req.body.ampm == 'am') {
+                militaryHour = 0
+            }else if(militaryHour == '12' && req.body.ampm == 'pm'){
+                militaryHour = 12
+            }else if(req.body.ampm == 'pm') {
+                militaryHour = Number(militaryHour) + 12
+            }            
         }
+
 
         let sequence;
         let sequenceYear = req.body.year

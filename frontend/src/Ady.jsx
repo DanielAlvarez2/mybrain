@@ -1,75 +1,105 @@
 import { useState, useEffect } from 'react'
-import './Ady.css'
+import './Appointments.css'
 import NavbarAdy from './components/NavbarAdy.jsx'
 
 export default function Ady() {
-    async function createNewNote(formData){
-        await fetch(`${BASE_URL}/api/note`, {   method:'POST', 
-                                                headers:{'Content-Type':'application/json'},
-                                                body: JSON.stringify({
-                                                    note: formData.get('note')
-                                                })
-                })
-                .then(getNotes)
-                .catch(err=>console.log(err))
+
+    const BASE_URL =    (process.env.NODE_ENV == 'production') ? 
+                        'https://mybrain-8bpo.onrender.com' :
+                        'http://localhost:1111'
+
+    const todayYear = Date().slice(11,15)
+    let todayMonth = Date().slice(4,7)
+    const todayDay = Date().slice(8,10)
+    if (todayMonth == 'Jan') todayMonth = '01'
+    if (todayMonth == 'Feb') todayMonth = '02'
+    if (todayMonth == 'Mar') todayMonth = '03'
+    if (todayMonth == 'Apr') todayMonth = '04'
+    if (todayMonth == 'May') todayMonth = '05'
+    if (todayMonth == 'Jun') todayMonth = '06'
+    if (todayMonth == 'Jul') todayMonth = '07'
+    if (todayMonth == 'Aug') todayMonth = '08'
+    if (todayMonth == 'Sep') todayMonth = '09'
+    if (todayMonth == 'Oct') todayMonth = '10'
+    if (todayMonth == 'Nov') todayMonth = '11'
+    if (todayMonth == 'Dec') todayMonth = '12'
+    const todaySequence = todayYear + todayMonth + todayDay + '0000'
+
+    const [appointments, setAppointments] = useState([])
+    useEffect(()=>{
+        getAppointments()
+        setTimeout(()=>window.location.reload(),3600000)
+    },[])
+
+    async function createNewAppointment(formData){
+        await fetch(`${BASE_URL}/api/appointment`,{ method:'POST', 
+                                                    headers:{'Content-Type':'application/json'},
+                                                    body:JSON.stringify({
+                                                        title:formData.get('title'),
+                                                        description:formData.get('description'),
+                                                        year:formData.get('year'),
+                                                        month:formData.get('month'),
+                                                        day:formData.get('day'),
+                                                        hour:formData.get('hour'),
+                                                        minute:formData.get('minute'),
+                                                        ampm:formData.get('ampm'),
+                                                        keep:formData.get('keep')
+        })})
+        .then(getAppointments)
+        .then(alert('Appointment Created'))
+        .catch(err=>console.log(err))
     }
 
-    async function deleteNote(id){
-        await fetch(`${BASE_URL}/api/note/${id}`, {method:'DELETE'})
-                .then(getNotes)
-                .catch(err=>console.log(err))
+    async function editAppointment(formData){
+        console.log(formData.get('id'))
+        await fetch(`${BASE_URL}/api/appointment/${formData.get('id')}`,{   method:'PUT',
+                                                                            headers:{'Content-Type':'application/json'},
+                                                                            body:JSON.stringify({
+                                                                                title:formData.get('title'),
+                                                                                description:formData.get('description'),
+                                                                                year:formData.get('year'),
+                                                                                month:formData.get('month'),
+                                                                                day:formData.get('day'),
+                                                                                hour:formData.get('hour'),
+                                                                                minute:formData.get('minute'),
+                                                                                ampm:formData.get('ampm'),
+                                                                                keep:formData.get(`keep-${formData.get('id')}`)
+                                                                            })
+        })
+        .then(closeEditAppointmentForm(formData.get('id')))
+        .then(getAppointments)
+        .catch(err=>console.log(err))
     }
 
-  const BASE_URL =  (process.env.NODE_ENV == 'production') ? 
-                    'https://mybrain-8bpo.onrender.com' :
-                    'http://localhost:1111'
+    function handleSubmit(e){
+        e.preventDefault()
+        const formData = new FormData(e.target)
+        editAppointment(formData)
+    }
 
-  const [notes, setNotes] = useState([])
+    function displayEditAppointmentForm(id){
+        document.querySelectorAll('.edit-appointment-forms').forEach(event=>event.style.display = 'none')
+        document.querySelector(`#edit-appointment-${id}`).style.display = 'block'
+        document.querySelectorAll(`.appointment-control-btns`).forEach(event=>event.style.display = 'block')
+        document.querySelector(`#appointment-control-btns-${id}`).style.display = 'none'
+    }
 
-  const [page, setPage] = useState('')
+    function closeEditAppointmentForm(id){
+        document.querySelector(`#edit-appointment-${id}`).style.display = 'none'
+        document.querySelector(`#appointment-control-btns-${id}`).style.display = 'block'
+    }
 
-  useEffect(()=>setPage('Home'))
-
-  const [birthdays, setBirthdays] = useState([])
-
-  const getBirthdays = ()=>{
-    fetch(`${BASE_URL}/api/birthday`)
-      .then(res=>res.json())
-      .then(json=>setBirthdays(json))
-      .catch(err=>console.log(err))
-  }
-  useEffect(()=>getBirthdays(),[])
-
-
-  const getNotes = ()=>{
-    fetch(`${BASE_URL}/api/note`)
-      .then(res=>res.json())
-      .then(json=>setNotes(json))
-      .catch(err=>console.log(err))
-  }
-
-  useEffect(()=>getNotes(),[])
-
-  function displayEdit(id){
-    document.querySelectorAll('.note-buttons').forEach(item=>item.style.display = 'block')
-    document.querySelectorAll('.edit-item').forEach(item=>item.style.display = 'none')
-    document.querySelector(`#edit-${id}`).style.display = 'block'
-    document.querySelector(`#buttons-${id}`).style.display = 'none'
-  }
-  function cancelEdit(){
-    document.querySelectorAll('.edit-item').forEach(item=>item.style.display = 'none')
-    document.querySelectorAll('.note-buttons').forEach(item=>item.style.display = 'block')
-  }
-  async function updateNote(formData){
-    await fetch(`${BASE_URL}/api/note/${formData.get('id')}`,
-                {   method:'PUT',
-                    headers:{'Content-Type':'application/json'},
-                    body: JSON.stringify({note: formData.get('note-update')})})
-            .then(document.querySelectorAll('.edit-item').forEach(item=>item.style.display = 'none'))
-            .then(document.querySelectorAll('.note-buttons').forEach(item=>item.style.display = 'block'))
-            .then(getNotes)
+    function getAppointments(){
+        fetch(`${BASE_URL}/api/appointments`)
+            .then(res=>res.json())
+            .then(json=>setAppointments(json))
             .catch(err=>console.log(err))
-  }
+    }
+    async function deleteAppointment(id){
+        await fetch(`${BASE_URL}/api/appointment/${id}`,{method:'DELETE'})
+            .then(getAppointments)
+            .catch(err=>console.log(err))
+    }
 
   return (
     <>
@@ -85,80 +115,509 @@ export default function Ady() {
                     </h1>
                     <hr/>     
             
-              <NavbarAdy page={page} />
+              <NavbarAdy page='Appointments' />
             
+            <h2>Appointments</h2>
             <h2>{Date().slice(0,10)}</h2><br/>
-            {
-                Date().slice(0,3) == 'Sat' || Date().slice(0,3) == 'Sun' && 
-                    <>
-                    <div style={{background:'red',color:'white',textAlign:'center'}}>
-                        The girls do NOT have school today
-                    </div><br/>
-                    </>
-          }
 
-            {notes.map(data=>{
+            {appointments.map(appointment=>{
                 return(
-                <div key={data._id}>
-                    {data.note}<br/>
+                    appointment.sequence >= todaySequence && 
+                    <div key={appointment._id}>
+                                <b>{appointment.month} {appointment.day} {appointment.year} &nbsp;
+                                
+                                {appointment.hour != '99' && 
+                                    <span>
+                                        {appointment.hour}:
+                                        {appointment.minute < 10 ? '0'+appointment.minute : appointment.minute}
+                                        {appointment.ampm}
+                                    </span>
+                                } 
 
-                    <div className='edit-item' id={`edit-${data._id}`}>
-                        <span style={{color:'blue'}}>CHANGE TO:</span><br/>
-                        <form action={updateNote}>
-                            <input type='hidden' name='id' value={data._id} />
-                            <textarea name='note-update' defaultValue={data.note}></textarea>
-                            <input  type='submit'
-                                    value='UPDATE'
-                                    style={{background:'green',color:'white'}} 
-                                    className='note-btn' />
-                            <span   className='note-btn'
-                                    onClick={cancelEdit} 
-                                    style={{background:'red',color:'white'}}>CANCEL</span>
-                        </form>
-                    </div>
-                    <div id={`buttons-${data._id}`} className='note-buttons'>
-                        <span   className='note-btn' 
-                                onClick={()=>displayEdit(`${data._id}`)}
-                                style={{background:'blue',color:'white'}}
-                                >EDIT</span>
+                                </b>
+                                <br/>
+                                {appointment.title}<br/>
+                                {appointment.description && <>{appointment.description}<br/></>}
+                                {appointment.keep ? 'SAVE in History' : 'DELETE from History'}
+                                <br/>
+                                <form onSubmit={handleSubmit}>
+
+                                    <input  type='hidden' 
+                                            name='id'
+                                            value={appointment._id} />
+                                    <div    className='edit-appointment-forms' 
+                                            style={{background:'lightgrey',
+                                                    borderRadius:'10px',
+                                                    padding:'5px'}}
+                                            id={`edit-appointment-${appointment._id}`}>
+                                        <span style={{color:'blue'}}>CHANGE TO:</span><br/>
+
+                                        <div style={{display:'flex'}}>
+                                            <div style={{display:'flex',gap:'20px'}}>
+                                                <label>
+                                                    Month:<br/>
+                                                    <select name='month' 
+                                                            required 
+                                                            defaultValue={appointment.month}>
+                                                        <option value='' disabled>---</option>
+                                                        <option value='Jan'>Jan</option>
+                                                        <option value='Feb'>Feb</option>
+                                                        <option value='Mar'>Mar</option>
+                                                        <option value='Apr'>Apr</option>
+                                                        <option value='May'>May</option>
+                                                        <option value='Jun'>Jun</option>
+                                                        <option value='Jul'>Jul</option>
+                                                        <option value='Aug'>Aug</option>
+                                                        <option value='Sep'>Sep</option>
+                                                        <option value='Oct'>Oct</option>
+                                                        <option value='Nov'>Nov</option>
+                                                        <option value='Dec'>Dec</option>
+                                                    </select>
+                                                </label>
+                                                
+                                                <label>
+                                                    Day:<br/>
+                                                    <select name='day' 
+                                                            required 
+                                                            defaultValue={appointment.day}>
+                                                        <option value='' disabled>--</option>
+                                                        <option value='1'>1</option>
+                                                        <option value='2'>2</option>
+                                                        <option value='3'>3</option>
+                                                        <option value='4'>4</option>
+                                                        <option value='5'>5</option>
+                                                        <option value='6'>6</option>
+                                                        <option value='7'>7</option>
+                                                        <option value='8'>8</option>
+                                                        <option value='9'>9</option>
+                                                        <option value='10'>10</option>
+                                                        <option value='11'>11</option>
+                                                        <option value='12'>12</option>
+                                                        <option value='13'>13</option>
+                                                        <option value='14'>14</option>
+                                                        <option value='15'>15</option>
+                                                        <option value='16'>16</option>
+                                                        <option value='17'>17</option>
+                                                        <option value='18'>18</option>
+                                                        <option value='19'>19</option>
+                                                        <option value='20'>20</option>
+                                                        <option value='21'>21</option>
+                                                        <option value='22'>22</option>
+                                                        <option value='23'>23</option>
+                                                        <option value='24'>24</option>
+                                                        <option value='25'>25</option>
+                                                        <option value='26'>26</option>
+                                                        <option value='27'>27</option>
+                                                        <option value='28'>28</option>
+                                                        <option value='29'>29</option>
+                                                        <option value='30'>30</option>
+                                                        <option value='31'>31</option>
+                                                    </select>
+                                                </label>
+                                                
+                                                <label>
+                                                    Year:<br/>
+                                                    <select name='year' 
+                                                            required 
+                                                            defaultValue={appointment.year}>
+                                                        <option value='' disabled>----</option>
+                                                        <option value={Date().slice(11,15)}>{Date().slice(11,15)}</option>
+                                                        <option value={Number(Date().slice(11,15))+1}>{Number(Date().slice(11,15))+1}</option>
+                                                    </select>
+                                                </label>
+
+                                            </div>
+                                            <div style={{marginLeft:'auto'}}>
+                                                <label>
+                                                    Time: (optional)<br/>
+                                                    <select name='hour' 
+                                                            
+                                                            defaultValue={appointment.hour}>
+                                                        <option value='99'>--</option>
+                                                        <option value='1'>1</option>
+                                                        <option value='2'>2</option>
+                                                        <option value='3'>3</option>
+                                                        <option value='4'>4</option>
+                                                        <option value='5'>5</option>
+                                                        <option value='6'>6</option>
+                                                        <option value='7'>7</option>
+                                                        <option value='8'>8</option>
+                                                        <option value='9'>9</option>
+                                                        <option value='10'>10</option>
+                                                        <option value='11'>11</option>
+                                                        <option value='12'>12</option>
+                                                    </select>
+                                                    :
+                                                    <select name='minute' 
+                                                            
+                                                            defaultValue={appointment.minute < 10 ? `0${appointment.minute}` : appointment.minute}>
+                                                        <option value='99' >--</option>
+                                                        <option value='00'>00</option>
+                                                        <option value='01'>01</option>
+                                                        <option value='02'>02</option>
+                                                        <option value='03'>03</option>
+                                                        <option value='04'>04</option>
+                                                        <option value='05'>05</option>
+                                                        <option value='06'>06</option>
+                                                        <option value='07'>07</option>
+                                                        <option value='08'>08</option>
+                                                        <option value='09'>09</option>
+                                                        <option value='10'>10</option>
+                                                        <option value='11'>11</option>
+                                                        <option value='12'>12</option>
+                                                        <option value='13'>13</option>
+                                                        <option value='14'>14</option>
+                                                        <option value='15'>15</option>
+                                                        <option value='16'>16</option>
+                                                        <option value='17'>17</option>
+                                                        <option value='18'>18</option>
+                                                        <option value='19'>19</option>
+                                                        <option value='20'>20</option>
+                                                        <option value='21'>21</option>
+                                                        <option value='22'>22</option>
+                                                        <option value='23'>23</option>
+                                                        <option value='24'>24</option>
+                                                        <option value='25'>25</option>
+                                                        <option value='26'>26</option>
+                                                        <option value='27'>27</option>
+                                                        <option value='28'>28</option>
+                                                        <option value='29'>29</option>
+                                                        <option value='30'>30</option>
+                                                        <option value='31'>31</option>
+                                                        <option value='32'>32</option>
+                                                        <option value='33'>33</option>
+                                                        <option value='34'>34</option>
+                                                        <option value='35'>35</option>
+                                                        <option value='36'>36</option>
+                                                        <option value='37'>37</option>
+                                                        <option value='38'>38</option>
+                                                        <option value='39'>39</option>
+                                                        <option value='40'>40</option>
+                                                        <option value='41'>41</option>
+                                                        <option value='42'>42</option>
+                                                        <option value='43'>43</option>
+                                                        <option value='44'>44</option>
+                                                        <option value='45'>45</option>
+                                                        <option value='46'>46</option>
+                                                        <option value='47'>47</option>
+                                                        <option value='48'>48</option>
+                                                        <option value='49'>49</option>
+                                                        <option value='50'>50</option>
+                                                        <option value='51'>51</option>
+                                                        <option value='52'>52</option>
+                                                        <option value='53'>53</option>
+                                                        <option value='54'>54</option>
+                                                        <option value='55'>55</option>
+                                                        <option value='56'>56</option>
+                                                        <option value='57'>57</option>
+                                                        <option value='58'>58</option>
+                                                        <option value='59'>59</option>
+                                                    </select>
+                                                </label>
+
+                                                <span>
+                                                    <select name='ampm' 
+                                                            
+                                                            defaultValue={appointment.ampm}>
+                                                        <option disabled value=''>am/pm</option>
+                                                        <option value='am'>am</option>
+                                                        <option value='pm'>pm</option>
+                                                    </select>
+                                                </span>
+
+                                            </div>
+                                        </div>{/* display:flex */}
+
+                                        <br/>
+
+
+                                        <label>
+                                            Title:&nbsp;
+                                            <input  type='text' 
+                                                    name='title'
+                                                    required
+                                                    defaultValue={appointment.title}
+                                                    style={{border:'1px solid grey',
+                                                            paddingLeft:'3px',
+                                                            width:'75%'
+                                                    }} />
+                                        </label><br/>
+
+                                        <br/>
+                                        <label>
+                                            Description: (optional)
+                                            <textarea   name='description' 
+                                                        defaultValue={appointment.description}
+                                            ></textarea>
+                                        </label><br/><br/>
+
+                                        <label>
+                                            AFTER this event occurs:<br/>
+                                            <input  type='radio' 
+                                                    value='keep' 
+                                                    name={`keep-${appointment._id}`}
+                                                    defaultChecked={appointment.keep}
+                                                    style={{cursor:'pointer'}} 
+                                                    required /> SAVE it to History for future reference<br/>
+                                            <input  type='radio' 
+                                                    defaultChecked={!appointment.keep}
+                                                    value='delete' 
+                                                    style={{cursor:'pointer'}}
+                                                    name={`keep-${appointment._id}`} 
+                                                    /> DELETE it from History
+                                        </label><br/><br/>
+
+                                        <input  type='submit' 
+                                                value='UPDATE'
+                                                className='event-btn'
+                                                onClick={()=>editAppointment()}
+                                                style={{background:'green',
+                                                        color:'white',
+                                                }} />
+                                        <span   className='event-btn' 
+                                                onClick={()=>closeEditAppointmentForm(appointment._id)}
+                                                style={{background:'red',
+                                                        color:'white'}}>CANCEL</span>
+
+                                    </div>{/* .edit-appointment-forms */}
+
+                                    <div    className='appointment-control-btns' 
+                                            id={`appointment-control-btns-${appointment._id}`}>
+                                        <span   style={{background:'red',
+                                                        color:'white'}} 
+                                                onClick={()=>deleteAppointment(appointment._id)}
+                                                className='event-btn'>DELETE</span>
+                                        <span   style={{background:'blue',
+                                                        color:'white'}} 
+                                                onClick={()=>displayEditAppointmentForm(appointment._id)}
+                                                className='event-btn'>EDIT</span>
+                                    </div>{/* .appointment-control-btns */}                                    
+                                </form>
+                                <br/><br/>
+                            </div>
+
                         
-                        <span   onClick={()=>deleteNote(data._id)} 
-                                className='note-btn'
-                                style={{background:'red',
-                                        color:'white'
-                                        }}>DELETE</span>    
-                    </div>
-                    <br/><br/>
-                </div>
                 )
             })}
 
-          {birthdays.map(bday=>{
-            return(
-                (Date().slice(4,7) == bday.month && Date().slice(8,11) == bday.day) &&
-                    <div key={bday._id}>
-                      <div className='dad-display-bday'>
-                        Today is {bday.name}'s Birthday!<br/>
-                        {bday.year &&  <>
-                                          Turning {Date().slice(11,15)-bday.year} today<br/>
-                                        </>}
-                      </div>                      
-                      <br/>
-                    </div>              
-            )
-          })}
 
-            <hr/>
-            <br/>
-            <form style={{background:'lightgrey',
-                          borderRadius:'10px',
-                          padding:'7px'}} action={createNewNote}>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <form   action={createNewAppointment} 
+                    style={{background:'lightgrey',
+                            borderRadius:'10px',
+                            padding:'5px'}} >
+                <h3>Add a New Appointment</h3>
+                <br/>
+                
                 <label>
-                    <h3>Add a New Note:</h3>
-                    <textarea   name='note' 
-                                required
+                    Title:&nbsp;
+                    <input  type='text' 
+                            name='title'
+                            required
+                            style={{border:'1px solid grey',
+                                    paddingLeft:'3px',
+                                    width:'75%'
+                            }} />
+                </label><br/><br/>
+                
+                <div style={{display:'flex'}}>
+                    <div style={{display:'flex',gap:'20px'}}>
+                        <label>
+                            Month:<br/>
+                            <select name='month' required defaultValue=''>
+                                <option value='' disabled>---</option>
+                                <option>Jan</option>
+                                <option>Feb</option>
+                                <option>Mar</option>
+                                <option>Apr</option>
+                                <option>May</option>
+                                <option>Jun</option>
+                                <option>Jul</option>
+                                <option>Aug</option>
+                                <option>Sep</option>
+                                <option>Oct</option>
+                                <option>Nov</option>
+                                <option>Dec</option>
+                            </select>
+                        </label>
+                        
+                        <label>
+                            Day:<br/>
+                            <select name='day' required defaultValue=''>
+                                <option value='' disabled>--</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                                <option>11</option>
+                                <option>12</option>
+                                <option>13</option>
+                                <option>14</option>
+                                <option>15</option>
+                                <option>16</option>
+                                <option>17</option>
+                                <option>18</option>
+                                <option>19</option>
+                                <option>20</option>
+                                <option>21</option>
+                                <option>22</option>
+                                <option>23</option>
+                                <option>24</option>
+                                <option>25</option>
+                                <option>26</option>
+                                <option>27</option>
+                                <option>28</option>
+                                <option>29</option>
+                                <option>30</option>
+                                <option>31</option>
+                            </select>
+                        </label>
+                        
+                        <label>
+                            Year:<br/>
+                            <select name='year' required defaultValue=''>
+                                <option value='' disabled>----</option>
+                                <option>{Date().slice(11,15)}</option>
+                                <option>{Number(Date().slice(11,15))+1}</option>
+                            </select>
+                        </label>
+
+                    </div>
+                    <div style={{marginLeft:'auto'}}>
+                        <label>
+                            Time: (optional)<br/>
+                            <select name='hour' 
+                                    
+                                    defaultValue='99'>
+                                <option value='99'>--</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                                <option>11</option>
+                                <option>12</option>
+                            </select>
+                            :
+                            <select name='minute' defaultValue='99'>
+                                <option value='99'>--</option>
+                                <option>00</option>
+                                <option>01</option>
+                                <option>02</option>
+                                <option>03</option>
+                                <option>04</option>
+                                <option>05</option>
+                                <option>06</option>
+                                <option>07</option>
+                                <option>08</option>
+                                <option>09</option>
+                                <option>10</option>
+                                <option>11</option>
+                                <option>12</option>
+                                <option>13</option>
+                                <option>14</option>
+                                <option>15</option>
+                                <option>16</option>
+                                <option>17</option>
+                                <option>18</option>
+                                <option>19</option>
+                                <option>20</option>
+                                <option>21</option>
+                                <option>22</option>
+                                <option>23</option>
+                                <option>24</option>
+                                <option>25</option>
+                                <option>26</option>
+                                <option>27</option>
+                                <option>28</option>
+                                <option>29</option>
+                                <option>30</option>
+                                <option>31</option>
+                                <option>32</option>
+                                <option>33</option>
+                                <option>34</option>
+                                <option>35</option>
+                                <option>36</option>
+                                <option>37</option>
+                                <option>38</option>
+                                <option>39</option>
+                                <option>40</option>
+                                <option>41</option>
+                                <option>42</option>
+                                <option>43</option>
+                                <option>44</option>
+                                <option>45</option>
+                                <option>46</option>
+                                <option>47</option>
+                                <option>48</option>
+                                <option>49</option>
+                                <option>50</option>
+                                <option>51</option>
+                                <option>52</option>
+                                <option>53</option>
+                                <option>54</option>
+                                <option>55</option>
+                                <option>56</option>
+                                <option>57</option>
+                                <option>58</option>
+                                <option>59</option>
+                            </select>
+                        </label>
+
+                        <span>
+                            <select name='ampm' defaultValue=''>
+                                <option disabled value=''>am/pm</option>
+                                <option>am</option>
+                                <option>pm</option>
+                            </select>
+                        </span>
+
+                    </div>
+                </div>{/* display:flex */}
+
+                <br/>
+                <label>
+                    Description: (optional)
+                    <textarea   name='description' 
                     ></textarea>
-                </label>
+                </label><br/><br/>
+
+                <label>
+                    AFTER this event occurs:<br/>
+                    <input  type='radio' 
+                            value='keep' 
+                            name='keep'
+                            style={{cursor:'pointer'}} 
+                            required /> SAVE it to History for future reference<br/>
+                    <input  type='radio' 
+                            value='delete' 
+                            style={{cursor:'pointer'}}
+                            name='keep' /> DELETE it from History
+                </label><br/><br/>
 
                 <input  type='submit' 
                         value='Upload'
@@ -171,6 +630,8 @@ export default function Ady() {
                                 borderRadius:'5px'
                         }} />
             </form>
+
+
         </div>{/* .adys-phone */}
       </div>{/* .wrapper */}
     </>

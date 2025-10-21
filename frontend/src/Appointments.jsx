@@ -26,7 +26,10 @@ export default function Appointments() {
     const todaySequence = todayYear + todayMonth + todayDay + '0000'
 
     const [appointments, setAppointments] = useState([])
-    useEffect(()=>getAppointments(),[])
+    useEffect(()=>{
+        getAppointments()
+        setTimeout(()=>window.location.reload(),3600000)
+    },[])
 
     async function createNewAppointment(formData){
         await fetch(`${BASE_URL}/api/appointment`,{ method:'POST', 
@@ -119,12 +122,20 @@ export default function Appointments() {
 
             {appointments.map(appointment=>{
                 return(
-                    appointment.sequence > todaySequence && 
+                    appointment.sequence >= todaySequence && 
                     <div key={appointment._id}>
                                 <b>{appointment.month} {appointment.day} {appointment.year} &nbsp;
-                                {appointment.hour}:
-                                {appointment.minute < 10 ? '0'+appointment.minute : appointment.minute}
-                                {appointment.ampm}</b><br/>
+                                
+                                {appointment.hour != '99' && 
+                                    <span>
+                                        {appointment.hour}:
+                                        {appointment.minute < 10 ? '0'+appointment.minute : appointment.minute}
+                                        {appointment.ampm}
+                                    </span>
+                                } 
+
+                                </b>
+                                <br/>
                                 {appointment.title}<br/>
                                 {appointment.description && <>{appointment.description}<br/></>}
                                 {appointment.keep ? 'SAVE in History' : 'DELETE from History'}
@@ -218,11 +229,11 @@ export default function Appointments() {
                                             </div>
                                             <div style={{marginLeft:'auto'}}>
                                                 <label>
-                                                    Time:<br/>
+                                                    Time: (optional)<br/>
                                                     <select name='hour' 
-                                                            required 
+                                                            
                                                             defaultValue={appointment.hour}>
-                                                        <option value='' disabled>--</option>
+                                                        <option value='99'>--</option>
                                                         <option value='1'>1</option>
                                                         <option value='2'>2</option>
                                                         <option value='3'>3</option>
@@ -238,9 +249,9 @@ export default function Appointments() {
                                                     </select>
                                                     :
                                                     <select name='minute' 
-                                                            required 
-                                                            defaultValue={appointment.minute}>
-                                                        <option value='' disabled>--</option>
+                                                            
+                                                            defaultValue={appointment.minute < 10 ? `0${appointment.minute}` : appointment.minute}>
+                                                        <option value='99' >--</option>
                                                         <option value='00'>00</option>
                                                         <option value='01'>01</option>
                                                         <option value='02'>02</option>
@@ -306,7 +317,7 @@ export default function Appointments() {
 
                                                 <span>
                                                     <select name='ampm' 
-                                                            required 
+                                                            
                                                             defaultValue={appointment.ampm}>
                                                         <option disabled value=''>am/pm</option>
                                                         <option value='am'>am</option>
@@ -493,11 +504,11 @@ export default function Appointments() {
                     </div>
                     <div style={{marginLeft:'auto'}}>
                         <label>
-                            Time:<br/>
+                            Time: (optional)<br/>
                             <select name='hour' 
-                                    required 
-                                    defaultValue=''>
-                                <option value='' disabled>--</option>
+                                    
+                                    defaultValue='99'>
+                                <option value='99'>--</option>
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>
@@ -512,8 +523,8 @@ export default function Appointments() {
                                 <option>12</option>
                             </select>
                             :
-                            <select name='minute' required defaultValue=''>
-                                <option value='' disabled>--</option>
+                            <select name='minute' defaultValue='99'>
+                                <option value='99'>--</option>
                                 <option>00</option>
                                 <option>01</option>
                                 <option>02</option>
@@ -578,7 +589,7 @@ export default function Appointments() {
                         </label>
 
                         <span>
-                            <select name='ampm' required defaultValue=''>
+                            <select name='ampm' defaultValue=''>
                                 <option disabled value=''>am/pm</option>
                                 <option>am</option>
                                 <option>pm</option>

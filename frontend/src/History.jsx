@@ -26,26 +26,11 @@ export default function History() {
     const todaySequence = todayYear + todayMonth + todayDay + '0000'
 
     const [appointments, setAppointments] = useState([])
-    useEffect(()=>getAppointments(),[])
+    useEffect(()=>{
+        getAppointments()
+        setTimeout(()=>window.location.reload(),3600000)
+    },[])
 
-    async function createNewAppointment(formData){
-        await fetch(`${BASE_URL}/api/appointment`,{ method:'POST', 
-                                                    headers:{'Content-Type':'application/json'},
-                                                    body:JSON.stringify({
-                                                        title:formData.get('title'),
-                                                        description:formData.get('description'),
-                                                        year:formData.get('year'),
-                                                        month:formData.get('month'),
-                                                        day:formData.get('day'),
-                                                        hour:formData.get('hour'),
-                                                        minute:formData.get('minute'),
-                                                        ampm:formData.get('ampm'),
-                                                        keep:formData.get('keep')
-        })})
-        .then(getAppointments)
-        .then(alert('Appointment Created'))
-        .catch(err=>console.log(err))
-    }
 
     async function editAppointment(formData){
         console.log(formData.get('id'))
@@ -87,7 +72,7 @@ export default function History() {
     }
 
     function getAppointments(){
-        fetch(`${BASE_URL}/api/appointments`)
+        fetch(`${BASE_URL}/api/history`)
             .then(res=>res.json())
             .then(json=>setAppointments(json))
             .catch(err=>console.log(err))
@@ -112,7 +97,7 @@ export default function History() {
                     </h1>
                     <hr/>     
             
-              <NavbarAdy />
+              <NavbarAdy page='History' />
             
             <h2>History</h2>
             <h2>{Date().slice(0,10)}</h2><br/>
@@ -120,11 +105,19 @@ export default function History() {
             {appointments.map(appointment=>{
                 return(
                     appointment.sequence < todaySequence && appointment.keep && 
-                                <div key={appointment._id}>
+                    <div key={appointment._id}>
                                 <b>{appointment.month} {appointment.day} {appointment.year} &nbsp;
-                                {appointment.hour}:
-                                {appointment.minute < 10 ? '0'+appointment.minute : appointment.minute}
-                                {appointment.ampm}</b><br/>
+                                
+                                {appointment.hour != '99' && 
+                                    <span>
+                                        {appointment.hour}:
+                                        {appointment.minute < 10 ? '0'+appointment.minute : appointment.minute}
+                                        {appointment.ampm}
+                                    </span>
+                                } 
+
+                                </b>
+                                <br/>
                                 {appointment.title}<br/>
                                 {appointment.description && <>{appointment.description}<br/></>}
                                 {appointment.keep ? 'SAVE in History' : 'DELETE from History'}
@@ -218,11 +211,11 @@ export default function History() {
                                             </div>
                                             <div style={{marginLeft:'auto'}}>
                                                 <label>
-                                                    Time:<br/>
+                                                    Time: (optional)<br/>
                                                     <select name='hour' 
-                                                            required 
+                                                            
                                                             defaultValue={appointment.hour}>
-                                                        <option value='' disabled>--</option>
+                                                        <option value='99'>--</option>
                                                         <option value='1'>1</option>
                                                         <option value='2'>2</option>
                                                         <option value='3'>3</option>
@@ -238,9 +231,9 @@ export default function History() {
                                                     </select>
                                                     :
                                                     <select name='minute' 
-                                                            required 
-                                                            defaultValue={appointment.minute}>
-                                                        <option value='' disabled>--</option>
+                                                            
+                                                            defaultValue={appointment.minute < 10 ? `0${appointment.minute}` : appointment.minute}>
+                                                        <option value='99' >--</option>
                                                         <option value='00'>00</option>
                                                         <option value='01'>01</option>
                                                         <option value='02'>02</option>
@@ -306,7 +299,7 @@ export default function History() {
 
                                                 <span>
                                                     <select name='ampm' 
-                                                            required 
+                                                            
                                                             defaultValue={appointment.ampm}>
                                                         <option disabled value=''>am/pm</option>
                                                         <option value='am'>am</option>

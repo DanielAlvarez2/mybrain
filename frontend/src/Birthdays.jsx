@@ -73,7 +73,7 @@ export default function Birthdays(){
                     <hr/> 
                     <NavbarAdy page={page} />   
                     <h2>Birthdays</h2>
-                    <br/>
+                    <h2>{Date().slice(0,10)}</h2><br/>
 
 
 
