@@ -120,8 +120,8 @@ export default function History() {
                                 <br/>
                                 {appointment.title}<br/>
                                 {appointment.description && <>{appointment.description}<br/></>}
-                                {appointment.keep ? 'SAVE in History' : 'DELETE from History'}
-                                <br/>
+                                
+                                
                                 <form onSubmit={handleSubmit}>
 
                                     <input  type='hidden' 
