@@ -7,6 +7,7 @@ export default function NavbarAdy(props){
             <span className={props.page == 'Appointments' ? 'current-page' : ''}><Link to='/ady'>Appointments</Link></span>
             <span className={props.page == 'History' ? 'current-page' : ''}><Link to='/history'>History</Link></span>
             <span className={props.page == 'Birthdays' ? 'current-page' : ''}><Link to='/birthdays'>Birthdays</Link></span>
+            <span className={props.page == 'DadView' ? 'current-page' : ''}><Link to='/dad-view'>DadView</Link></span>
         </nav>
     )
 }

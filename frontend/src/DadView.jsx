@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react'
 import './Appointments.css'
+import NavbarAdy from './components/NavbarAdy.jsx'
 
-export default function App() {
+export default function DadView() {
 
     const BASE_URL =    (process.env.NODE_ENV == 'production') ? 
                         'https://mybrain-8bpo.onrender.com' :
                         'http://localhost:1111'
 
+    const [page, setPage] = useState('')
+    useEffect(()=>setPage('DadView'))
 
     const [appointments, setAppointments] = useState([])
     useEffect(()=>{
@@ -34,7 +37,7 @@ export default function App() {
   return (
     <>
       <div className='wrapper'>
-        <div className='dads-phone dad-font'>
+        <div className='adys-phone'>
                     <h1 style={{display:'flex',
                                 gap:'10px',
                                 marginBottom:'5px',
@@ -44,10 +47,11 @@ export default function App() {
                         <span>MYbrain</span>
                     </h1>
                     <hr/>     
-            
-            
+            <NavbarAdy page={page} />   
+            <h2>DadView</h2>
             <h2>{Date().slice(0,10)}</h2><br/>
 
+            <div className='dad-font'>
             {appointments.map(appointment=>{
                 return(
                     appointment.month == Date().slice(4,7) &&  
@@ -91,8 +95,8 @@ export default function App() {
                     </div>              
             )
           })}
-
-        </div>{/* .dads-phone */}
+        </div>{/* .dad-font */}
+        </div>{/* .adys-phone */}
       </div>{/* .wrapper */}
     </>
   )

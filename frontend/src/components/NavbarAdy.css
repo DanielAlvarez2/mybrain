@@ -1,6 +1,6 @@
 .navbar-ady{
     display:flex;
-    gap:20px;
+    justify-content: space-between;
     margin:5px 0;
 }
 .navbar-ady a{

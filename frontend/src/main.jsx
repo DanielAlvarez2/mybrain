@@ -9,6 +9,7 @@ import TestDad from './TestDad.jsx'
 import Birthdays from './Birthdays.jsx'
 import Appointments from './Appointments.jsx'
 import History from './History.jsx'
+import DadView from './DadView.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -17,6 +18,7 @@ createRoot(document.getElementById('root')).render(
         <Route path='/' element={<App />} />
         <Route path='/ady' element={<Ady />} />
         <Route path='/test-dad' element={<TestDad />} />
+        <Route path='/dad-view' element={<DadView />} />
         <Route path='/test-ady' element={<TestAdy />} />
         <Route path='/birthdays' element={<Birthdays />} />
         <Route path='/appointments' element={<Appointments />} />
