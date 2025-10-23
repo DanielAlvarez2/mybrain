@@ -62,6 +62,8 @@ app.post('/api/appointment', async(req,res)=>{
         sequenceMinute = req.body.minute
         sequence = sequenceYear + sequenceMonth + sequenceDay + sequenceHour + sequenceMinute
 
+        if (req.body.hour && req.body.minute && !req.body.ampm) req.body.ampm = 'am'
+
         await Appointment.create({
             title:req.body.title,
             description:req.body.description,

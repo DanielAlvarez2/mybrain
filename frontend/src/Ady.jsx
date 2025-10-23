@@ -327,7 +327,7 @@ export default function Ady() {
                                                     <select name='ampm' 
                                                             
                                                             defaultValue={appointment.ampm}>
-                                                        <option disabled value=''>am/pm</option>
+                                                        <option value=''>am/pm</option>
                                                         <option value='am'>am</option>
                                                         <option value='pm'>pm</option>
                                                     </select>
