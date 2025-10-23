@@ -1,30 +1,25 @@
 import { useState, useEffect } from 'react'
 import './Appointments.css'
-import NavbarAdy from './components/NavbarAdy.jsx'
+import NavbarAdy from './components/NavbarAdy'
 
-export default function DadView() {
+export default function App() {
 
     const BASE_URL =    (process.env.NODE_ENV == 'production') ? 
                         'https://mybrain-8bpo.onrender.com' :
                         'http://localhost:1111'
 
-    const [page, setPage] = useState('')
-    useEffect(()=>setPage('DadView'))
 
     const [appointments, setAppointments] = useState([])
-    useEffect(()=>{
-        getAppointments()
-        setTimeout(()=>window.location.reload(),1800000)
-    },[])
-    const [birthdays, setBirthdays] = useState([])
-
     const [today, setToday] = useState(Date().slice(0,10))
     useEffect(()=>{
+        getAppointments()
         const updatePage = setInterval(()=>{
+          getAppointments()
           setToday(Date().slice(0,10))
         },1800000)
         return ()=> clearInterval(updatePage)
     },[])
+    const [birthdays, setBirthdays] = useState([])
 
     const getBirthdays = ()=>{
       fetch(`${BASE_URL}/api/birthday`)
@@ -51,15 +46,15 @@ export default function DadView() {
                                 marginBottom:'5px',
                                 alignItems:'center',
                                 justifyContent:'center'}}>
-                        <img src='./brain.jpeg' width='60px' />
+                        <img src='./brain.png' width='60px' />
                         <span>MYbrain</span>
                     </h1>
                     <hr/>     
-            <NavbarAdy page={page} />   
+            
+            <NavbarAdy page='DadView' />
             <h2>DadView</h2>
             <h2>{today}</h2><br/>
-
-            <div className='dad-font'>
+          <div className='dad-font'>
             {appointments.map(appointment=>{
                 return(
                     appointment.month == Date().slice(4,7) &&  
