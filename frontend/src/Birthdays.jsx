@@ -19,6 +19,15 @@ export default function Birthdays(){
             .catch(err=>console.log(err))
     }
 
+    const [today, setToday] = useState(Date().slice(0,10))
+    useEffect(()=>{
+        const updatePage = setInterval(()=>{
+          setToday(Date().slice(0,10))
+        },1800000)
+        return ()=> clearInterval(updatePage)
+    },[])
+
+
     useEffect(()=>getBirthdays(),[])
 
     async function addNewBirthday(formData){
@@ -73,7 +82,7 @@ export default function Birthdays(){
                     <hr/> 
                     <NavbarAdy page={page} />   
                     <h2>Birthdays</h2>
-                    <h2>{Date().slice(0,10)}</h2><br/>
+                    <h2>{today}</h2><br/>
 
 
 

@@ -18,6 +18,14 @@ export default function DadView() {
     },[])
     const [birthdays, setBirthdays] = useState([])
 
+    const [today, setToday] = useState(Date().slice(0,10))
+    useEffect(()=>{
+        const updatePage = setInterval(()=>{
+          setToday(Date().slice(0,10))
+        },1800000)
+        return ()=> clearInterval(updatePage)
+    },[])
+
     const getBirthdays = ()=>{
       fetch(`${BASE_URL}/api/birthday`)
         .then(res=>res.json())
@@ -49,7 +57,7 @@ export default function DadView() {
                     <hr/>     
             <NavbarAdy page={page} />   
             <h2>DadView</h2>
-            <h2>{Date().slice(0,10)}</h2><br/>
+            <h2>{today}</h2><br/>
 
             <div className='dad-font'>
             {appointments.map(appointment=>{

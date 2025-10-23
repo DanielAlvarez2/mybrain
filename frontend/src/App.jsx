@@ -9,9 +9,14 @@ export default function App() {
 
 
     const [appointments, setAppointments] = useState([])
+    const [today, setToday] = useState(Date().slice(0,10))
     useEffect(()=>{
         getAppointments()
-        setTimeout(()=>window.location.reload(),1800000)
+        const updatePage = setInterval(()=>{
+          getAppointments()
+          setToday(Date().slice(0,10))
+        },1800000)
+        return ()=> clearInterval(updatePage)
     },[])
     const [birthdays, setBirthdays] = useState([])
 
@@ -40,13 +45,13 @@ export default function App() {
                                 marginBottom:'5px',
                                 alignItems:'center',
                                 justifyContent:'center'}}>
-                        <img src='./brain.jpeg' width='60px' />
+                        <img src='./brain.png' width='60px' />
                         <span>MYbrain</span>
                     </h1>
                     <hr/>     
             
             
-            <h2>{Date().slice(0,10)}</h2><br/>
+            <h2>{today}</h2><br/>
 
             {appointments.map(appointment=>{
                 return(

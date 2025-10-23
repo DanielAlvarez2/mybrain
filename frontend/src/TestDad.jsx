@@ -1,18 +1,22 @@
 import { useState, useEffect } from 'react'
 import './Appointments.css'
-import NavbarAdy from './components/NavbarAdy.jsx'
 
-export default function TestDad() {
+export default function App() {
 
     const BASE_URL =    (process.env.NODE_ENV == 'production') ? 
                         'https://mybrain-8bpo.onrender.com' :
                         'http://localhost:1111'
 
 
+    const [today, setToday] = useState(Date().slice(0,10))
     const [appointments, setAppointments] = useState([])
     useEffect(()=>{
         getAppointments()
-        setTimeout(()=>window.location.reload(),1800000)
+        const updatePage = setInterval(()=>{
+          getAppointments()
+          setToday(Date().slice(0,10))
+        },1800000)
+        return ()=> clearInterval(updatePage)
     },[])
     const [birthdays, setBirthdays] = useState([])
 
@@ -35,19 +39,19 @@ export default function TestDad() {
   return (
     <>
       <div className='wrapper'>
-        <div className='dads-phone'>
+        <div className='dads-phone dad-font'>
                     <h1 style={{display:'flex',
                                 gap:'10px',
                                 marginBottom:'5px',
                                 alignItems:'center',
                                 justifyContent:'center'}}>
-                        <img src='./brain.jpeg' width='60px' />
+                        <img src='./brain.png' width='60px' />
                         <span>MYbrain</span>
                     </h1>
                     <hr/>     
             
             
-            <h2>{Date().slice(0,10)}</h2><br/>
+            <h2>{today}</h2><br/>
 
             {appointments.map(appointment=>{
                 return(
@@ -92,23 +96,6 @@ export default function TestDad() {
                     </div>              
             )
           })}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         </div>{/* .dads-phone */}
       </div>{/* .wrapper */}

@@ -31,6 +31,14 @@ export default function Ady() {
         setTimeout(()=>window.location.reload(),3600000)
     },[])
 
+    const [today, setToday] = useState(Date().slice(0,10))
+    useEffect(()=>{
+        const updatePage = setInterval(()=>{
+          setToday(Date().slice(0,10))
+        },1800000)
+        return ()=> clearInterval(updatePage)
+    },[])
+
     async function createNewAppointment(formData){
         await fetch(`${BASE_URL}/api/appointment`,{ method:'POST', 
                                                     headers:{'Content-Type':'application/json'},
@@ -118,7 +126,7 @@ export default function Ady() {
               <NavbarAdy page='Appointments' />
             
             <h2>Appointments</h2>
-            <h2>{Date().slice(0,10)}</h2><br/>
+            <h2>{today}</h2><br/>
 
             {appointments.map(appointment=>{
                 return(

@@ -31,6 +31,14 @@ export default function History() {
         setTimeout(()=>window.location.reload(),3600000)
     },[])
 
+    const [today, setToday] = useState(Date().slice(0,10))
+    useEffect(()=>{
+        const updatePage = setInterval(()=>{
+          setToday(Date().slice(0,10))
+        },1800000)
+        return ()=> clearInterval(updatePage)
+    },[])
+
 
     async function editAppointment(formData){
         console.log(formData.get('id'))
@@ -100,7 +108,7 @@ export default function History() {
               <NavbarAdy page='History' />
             
             <h2>History</h2>
-            <h2>{Date().slice(0,10)}</h2><br/>
+            <h2>{today}</h2><br/>
 
             {appointments.map(appointment=>{
                 return(
