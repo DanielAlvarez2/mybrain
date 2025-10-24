@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import './Appointments.css'
+import './App.css'
 
 export default function App() {
 

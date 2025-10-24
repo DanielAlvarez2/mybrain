@@ -4,6 +4,7 @@ const cors = require('cors')
 const Note = require('./models/Note.js')
 const Birthday = require('./models/Birthday.js')
 const Appointment = require('./models/Appointment.js')
+const Pixels = require('./models/Pixels.js')
 
 const app = express()
 app.use(express.json())
@@ -19,6 +20,40 @@ console.log('');
         console.log(err)
     }
 })()
+app.get('/api/pixels', async(req,res)=>{
+    try{
+        console.log('getting pixels')
+        const pixels = await Pixels.find()
+        console.log(pixels)
+        if (pixels.length == 0) {
+            console.log('db is empty')
+            const newPixels = await Pixels.create({pixels:30})
+            console.log(newPixels)
+            res.json('30')
+        }else{
+            console.log('db is NOT empty')
+        }
+    }catch(err){
+        console.log(err)
+    }
+})
+app.put('/api/pixels', async(req,res)=>{
+    try{
+        const pixels = await Pixels.find()
+        if (!pixels) {
+            const newPixels = await Pixels.create({pixels:30})
+            res.json(newPixels)
+        }else{
+            const newPixels = await Pixels.findOneAndUpdate({pixels:{$gt:0}},
+                                                            {$set:{pixels:req.body.pixels}},
+                                                            {new:true}
+            )
+            res.json(newPixels)
+        }
+    }catch(err){
+        console.log(err)
+    }
+})
 app.post('/api/appointment', async(req,res)=>{
     try{
         let monthNum;
