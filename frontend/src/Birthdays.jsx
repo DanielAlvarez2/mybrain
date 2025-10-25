@@ -37,7 +37,8 @@ export default function Birthdays(){
                                                         name: formData.get('name'),
                                                         month: formData.get('month'),
                                                         day: formData.get('day'),
-                                                        year: formData.get('year')
+                                                        year: formData.get('year'),
+                                                        description: formData.get('description')
                                                     })
         })
         .then(getBirthdays)
@@ -52,7 +53,8 @@ export default function Birthdays(){
                                                             name:formData.get('name'),
                                                             month:formData.get('month'),
                                                             day:formData.get('day'),
-                                                            year:formData.get('year')
+                                                            year:formData.get('year'),
+                                                            description: formData.get('description')
                                                         })
         })
         .then(getBirthdays)
@@ -93,13 +95,24 @@ export default function Birthdays(){
                         <form action={addNewBirthday}>
                             
                             <div style={{display:'flex',justifyContent:'space-between'}} id='bday-flexbox'>
-                                <label>
-                                    Name:<br/>
-                                    <input  type='text' 
-                                            name='name' 
-                                            style={{width:'140px',padding:'0 2px'}}
-                                            required />
-                                </label>
+                                <div>
+
+                                    <label>
+                                        Name:<br/>
+                                        <input  type='text' 
+                                                name='name' 
+                                                style={{width:'140px',padding:'0 2px'}}
+                                                required />
+                                    </label>
+                                    <br/><br/>
+                                    <label>
+                                        Relation/Nickname:<br/>
+                                        <input  type='text'
+                                                name='description'
+                                                style={{width:'140px',padding:'0 2px'}} /><br/>
+                                        <span style={{fontSize:'11px'}}>(optional)</span>
+                                    </label>
+                                </div>
 
                                 <label>
                                     Month:<br/>
@@ -172,7 +185,7 @@ export default function Birthdays(){
                             </div>{/* #bday-flexbox */}
 
                             
-
+                            <br/>
                             <input  type='submit' 
                                     value='Upload'
                                     style={{padding:'5px 15px',

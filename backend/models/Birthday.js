@@ -5,7 +5,8 @@ const BirthdaySchema = new mongoose.Schema({
     month: {type:String},
     monthNum: {type:Number},
     day: {type:Number},
-    year: {type:Number}
+    year: {type:Number},
+    description: {type:String}
 })
 
 module.exports = mongoose.model('Birthday', BirthdaySchema)

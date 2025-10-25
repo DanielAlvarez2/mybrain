@@ -221,7 +221,8 @@ app.post('/api/birthday', async(req,res)=>{
             month:req.body.month,
             monthNum,
             day:Number(req.body.day),
-            year:req.body.year
+            year:req.body.year,
+            description: req.body.description
         })
         console.log('Birthday Added to Database')
         res.json('Birthday Added to Database')
@@ -277,7 +278,8 @@ app.put('/api/birthday/:id', async(req,res)=>{
                                                                 month: req.body.month,
                                                                 monthNum,
                                                                 day: req.body.day,
-                                                                year: req.body.year
+                                                                year: req.body.year,
+                                                                description: req.body.description
         })
         console.log('Birthday Updated')
         res.json('Birthday Updated')

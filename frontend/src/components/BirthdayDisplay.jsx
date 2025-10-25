@@ -25,7 +25,10 @@ export default function BirthdayDisplay(props){
                     
                                 <div className='display-bday' style={{display:'flex',gap:'5px'}}>
                                     <span style={{width:'12ch'}}>{props.bday.month} {props.bday.day < 10 && '0'}{props.bday.day} {props.bday.year ? props.bday.year : '------'}</span>
-                                    <span>{props.bday.name}</span>
+                                    <div>
+                                        <span>{props.bday.name}</span><br/>
+                                        <span>{props.bday.description}</span>
+                                    </div>
                                 </div>{/* .display-bday */}
 
                                 <div    className='bday-edit-forms'
@@ -109,14 +112,27 @@ export default function BirthdayDisplay(props){
                                                     <span style={{fontSize:'11px'}}>(optional)</span>
                                                 </label>
 
-                                                <label>
-                                                    Name:<br/>
-                                                    <input  type='text' 
-                                                            name='name' 
-                                                            defaultValue={props.bday.name}
-                                                            style={{width:'140px',padding:'0 2px'}}
-                                                            required />
-                                                </label>
+                                                <div>
+
+                                                    <label>
+                                                        Name:<br/>
+                                                        <input  type='text' 
+                                                                name='name' 
+                                                                defaultValue={props.bday.name}
+                                                                style={{width:'140px',padding:'0 2px'}}
+                                                                required />
+                                                    </label>
+                                                    <br/><br/>
+                                                    <label>
+                                                        Relation/Nickname:<br/>
+                                                        <input  type='text'
+                                                                defaultValue={props.bday.description}
+                                                                style={{width:'140px',padding:'0 2px'}}
+                                                                name='description' /><br/>
+                                                        <span style={{fontSize:'11px'}}>(optional)</span>
+
+                                                    </label>
+                                                </div>
                                         </div>
                                         <input  type='submit' 
                                                 value='UPDATE'
