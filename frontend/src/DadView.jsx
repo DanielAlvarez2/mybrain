@@ -54,6 +54,18 @@ export default function App() {
             <NavbarAdy page='DadView' />
             <h2>DadView</h2>
             <h2>{today}</h2><br/>
+
+            {(Date().slice(0,3) == 'Sat' || Date().slice(0,3) == 'Sun') &&  <>
+                                              <div style={{ background:'red',
+                                                            fontSize:'18px',
+                                                            padding:'2px 0',
+                                                            textAlign:'center',
+                                                            color:'white'}}>
+                                                The girls do NOT have school today
+                                              </div><br/>
+                                            </>}
+
+
           <div className='dad-font'>
             {appointments.map(appointment=>{
                 return(
