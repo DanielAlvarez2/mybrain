@@ -12,11 +12,9 @@ export default function App() {
     const [today, setToday] = useState(Date().slice(0,10))
     useEffect(()=>{
         getAppointments()
-        const updatePage = setInterval(()=>{
-          getAppointments()
-          setToday(Date().slice(0,10))
+        setTimeout(()=>{
+          window.location.reload()
         },1800000)
-        return ()=> clearInterval(updatePage)
     },[])
     const [birthdays, setBirthdays] = useState([])
 
