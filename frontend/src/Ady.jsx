@@ -609,8 +609,10 @@ export default function Ady() {
 
                 <br/>
                 <label>
-                    Description: (optional)
-                    <textarea   name='description' 
+                    Description: (optional)<br/>
+                    <textarea   name='description'
+                                rows='5'
+                                style={{width:'100%'}} 
                     ></textarea>
                 </label><br/><br/>
 
