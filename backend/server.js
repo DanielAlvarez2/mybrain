@@ -31,7 +31,28 @@ app.get('/api/pixels', async(req,res)=>{
             console.log(newPixels)
             res.json('30')
         }else{
+            res.json(pixels[0].pixels)
             console.log('db is NOT empty')
+        }
+    }catch(err){
+        console.log(err)
+    }
+})
+app.get('/api/pixels/:change',async(req,res)=>{
+    try{
+        const change = req.params.change
+        const currentPixels = await Pixels.find()
+        if (change == 'minus'){
+            await Pixels.findByIdAndUpdate(
+                {_id: currentPixels[0]._id},
+                {pixels: currentPixels[0].pixels - 1})
+            res.json(currentPixels[0].pixels - 1)
+        }
+        if (change == 'plus'){
+            await Pixels.findByIdAndUpdate(
+                {_id: currentPixels[0]._id},
+                {pixels: currentPixels[0].pixels + 1})
+            res.json(currentPixels[0].pixels + 1)
         }
     }catch(err){
         console.log(err)

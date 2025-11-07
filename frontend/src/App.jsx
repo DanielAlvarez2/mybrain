@@ -7,6 +7,16 @@ export default function App() {
                         'https://mybrain-8bpo.onrender.com' :
                         'http://localhost:1111'
 
+    const [pixels, setPixels] = useState('')
+    function getPixels(){
+    fetch(`${BASE_URL}/api/pixels`)
+    .then(res=>res.json())
+    .then(json=>setPixels(json))
+    .catch(err=>console.log(err))
+    }
+    useEffect(()=>getPixels(),[])
+
+
 
     const [appointments, setAppointments] = useState([])
     const [today, setToday] = useState(Date().slice(0,10))
@@ -37,7 +47,7 @@ export default function App() {
   return (
     <>
       <div className='wrapper'>
-        <div className='dads-phone dad-font'>
+        <div className='dads-phone'>
                     <h1 style={{display:'flex',
                                 gap:'10px',
                                 marginBottom:'5px',
@@ -60,6 +70,9 @@ export default function App() {
                                                 The girls do NOT have school today
                                               </div><br/>
                                             </>}
+
+
+            <div style={{fontSize:`${pixels}px`}}>
             {appointments.map(appointment=>{
                 return(
                     appointment.month == Date().slice(4,7) &&  
@@ -105,7 +118,7 @@ export default function App() {
                     </div>              
             )
           })}
-
+        </div>{/* fontSize */}
         </div>{/* .dads-phone */}
       </div>{/* .wrapper */}
     </>
