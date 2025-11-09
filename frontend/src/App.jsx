@@ -61,18 +61,20 @@ export default function App() {
             
             <h2>{today}</h2><br/>
 
+            <div style={{fontSize:`${pixels}px`}}>
+            
             {(Date().slice(0,3) == 'Sat' || Date().slice(0,3) == 'Sun') &&  <>
                                               <div style={{ background:'red',
-                                                            fontSize:'18px',
+                                                            
                                                             padding:'2px 0',
                                                             textAlign:'center',
                                                             color:'white'}}>
-                                                The girls do NOT have school today
+                                                The girls do NOT<br/> 
+                                                have school today
                                               </div><br/>
                                             </>}
 
 
-            <div style={{fontSize:`${pixels}px`}}>
             {appointments.map(appointment=>{
                 return(
                     appointment.month == Date().slice(4,7) &&  

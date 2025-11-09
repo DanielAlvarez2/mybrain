@@ -90,6 +90,19 @@ justifyContent:'center'}}>
 <h2>{today}</h2><br/>
 
 <div className='dad-font' style={{fontSize:`${pixels}px`}}>
+
+                {(Date().slice(0,3) == 'Sat' || Date().slice(0,3) == 'Sun') &&  <>
+                                              <div style={{ background:'red',
+                                                            
+                                                            padding:'2px 0',
+                                                            textAlign:'center',
+                                                            color:'white'}}>
+                                                The girls do NOT<br/> 
+                                                have school today
+                                              </div><br/>
+                                            </>}
+
+
 {appointments.map(appointment=>{
 return(
 appointment.month == Date().slice(4,7) &&
