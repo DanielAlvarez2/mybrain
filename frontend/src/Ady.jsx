@@ -51,7 +51,7 @@ export default function Ady() {
                                                         hour:formData.get('hour'),
                                                         minute:formData.get('minute'),
                                                         ampm:formData.get('ampm'),
-                                                        keep:formData.get('keep')
+                                                        eventType: formData.get('event-type'),
         })})
         .then(getAppointments)
         .then(alert('Appointment Created'))
@@ -361,18 +361,27 @@ export default function Ady() {
 
                                         <label>
                                             AFTER this event occurs:<br/>
+
                                             <input  type='radio' 
-                                                    value='keep' 
-                                                    name={`keep-${appointment._id}`}
+                                                    value='recurring' 
+                                                    name={`event-type-${appointment._id}`}
                                                     defaultChecked={appointment.keep}
                                                     style={{cursor:'pointer'}} 
-                                                    required /> SAVE it to History for future reference<br/>
+                                                    required /> save as RECURRING<br/>
+
+                                            <input  type='radio' 
+                                                    value='history' 
+                                                    name={`event-type-${appointment._id}`}
+                                                    defaultChecked={appointment.keep}
+                                                    style={{cursor:'pointer'}} 
+                                                    /> save in HISTORY<br/>
+
                                             <input  type='radio' 
                                                     defaultChecked={!appointment.keep}
                                                     value='delete' 
                                                     style={{cursor:'pointer'}}
-                                                    name={`keep-${appointment._id}`} 
-                                                    /> DELETE it from History
+                                                    name={`event-type-${appointment._id}`} 
+                                                    /> DELETE it
                                         </label><br/><br/>
 
                                         <input  type='submit' 

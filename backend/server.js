@@ -131,7 +131,7 @@ app.post('/api/appointment', async(req,res)=>{
             militaryHour,
             minute:req.body.minute,
             ampm:req.body.ampm,
-            keep:req.body.keep == 'keep' ? true : false,
+            eventType: req.body.eventType,
             sequence
         })
         console.log('Appointment Created')
@@ -140,6 +140,7 @@ app.post('/api/appointment', async(req,res)=>{
         console.log(err)
     }
 })
+
 app.put('/api/appointment/:id', async(req,res)=>{
     try{
         let monthNum;
