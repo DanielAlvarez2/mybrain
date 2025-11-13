@@ -55,7 +55,9 @@ export default function Ady() {
                                                         eventType:formData.get('event-type')
         })})
         .then(getAppointments)
-        .then(alert('Appointment Created'))
+        .then(alert(`
+            Appointment Created:
+             - ${formData.get('title')}`))
         .catch(err=>console.log(err))
     }
 
@@ -654,7 +656,7 @@ export default function Ady() {
                             style={{cursor:'pointer'}}
                             name='event-type' /> DELETE it<br/>
 
-                </label><br/><br/>
+                </label><br/>
 
                 <input  type='submit' 
                         value='Upload'

@@ -359,7 +359,7 @@ export default function Recurring() {
                                                     name={`event-type-${appointment._id}`}
                                                     defaultChecked={appointment.eventType == 'history'}
                                                     style={{cursor:'pointer'}} 
-                                                    /> &nbsp;save to HISTORY<br/>
+                                                    /> &nbsp;save in HISTORY<br/>
                                             &nbsp;
                                             <input  type='radio' 
                                                     defaultChecked={appointment.eventType == 'delete'}
