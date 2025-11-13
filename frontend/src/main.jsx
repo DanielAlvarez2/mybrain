@@ -9,6 +9,7 @@ import TestDad from './TestDad.jsx'
 import Birthdays from './Birthdays.jsx'
 import Appointments from './Appointments.jsx'
 import History from './History.jsx'
+import Recurring from './Recurring.jsx'
 import DadView from './DadView.jsx'
 
 createRoot(document.getElementById('root')).render(
@@ -22,6 +23,7 @@ createRoot(document.getElementById('root')).render(
         <Route path='/test-ady' element={<TestAdy />} />
         <Route path='/birthdays' element={<Birthdays />} />
         <Route path='/appointments' element={<Appointments />} />
+        <Route path='/recurring' element={<Recurring />} />
         <Route path='/history' element={<History />} />
       </Routes>
     </BrowserRouter>

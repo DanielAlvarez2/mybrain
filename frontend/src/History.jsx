@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import './Appointments.css'
 import NavbarAdy from './components/NavbarAdy.jsx'
 
-export default function History() {
+export default function Recurring() {
 
     const BASE_URL =    (process.env.NODE_ENV == 'production') ? 
                         'https://mybrain-8bpo.onrender.com' :
@@ -112,7 +112,7 @@ export default function History() {
 
             {appointments.map(appointment=>{
                 return(
-                    appointment.sequence < todaySequence && appointment.keep && 
+                    appointment.sequence < todaySequence && appointment.eventType == 'history' && 
                     <div key={appointment._id}>
                                 <b>{appointment.month} {appointment.day} {appointment.year} &nbsp;
                                 
@@ -335,27 +335,39 @@ export default function History() {
 
                                         <br/>
                                         <label>
-                                            Description: (optional)
+                                            Description: (optional)<br/>
                                             <textarea   name='description' 
+                                                        rows='5'
+                                                        style={{width:'100%'}}
                                                         defaultValue={appointment.description}
                                             ></textarea>
                                         </label><br/><br/>
 
                                         <label>
                                             AFTER this event occurs:<br/>
-                                            <input  type='radio' 
-                                                    value='keep' 
-                                                    name={`keep-${appointment._id}`}
-                                                    defaultChecked={appointment.keep}
+                                            &nbsp;
+                                            <input  type='radio'
+                                                    value='recurring'
+                                                    name={`event-type-${appointment._id}`}
+                                                    defaultChecked={appointment.eventType == 'recurring'}
                                                     style={{cursor:'pointer'}} 
-                                                    required /> SAVE it to History for future reference<br/>
+                                                    /> &nbsp;save as RECURRING<br/>
+
+                                            &nbsp;
                                             <input  type='radio' 
-                                                    defaultChecked={!appointment.keep}
+                                                    value='history' 
+                                                    name={`event-type-${appointment._id}`}
+                                                    defaultChecked={appointment.eventType == 'history'}
+                                                    style={{cursor:'pointer'}} 
+                                                    /> &nbsp;save to HISTORY<br/>
+                                            &nbsp;
+                                            <input  type='radio' 
+                                                    defaultChecked={appointment.eventType == 'delete'}
                                                     value='delete' 
                                                     style={{cursor:'pointer'}}
-                                                    name={`keep-${appointment._id}`} 
-                                                    /> DELETE it from History
-                                        </label><br/><br/>
+                                                    name={`event-type-${appointment._id}`} 
+                                                    /> &nbsp;DELETE it<br/>
+                                        </label><br/>
 
                                         <input  type='submit' 
                                                 value='UPDATE'

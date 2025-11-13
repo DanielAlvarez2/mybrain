@@ -118,8 +118,8 @@ app.post('/api/appointment', async(req,res)=>{
         sequenceMinute = req.body.minute
         sequence = sequenceYear + sequenceMonth + sequenceDay + sequenceHour + sequenceMinute
 
-        if (req.body.hour && req.body.minute && !req.body.ampm) req.body.ampm = 'am'
-
+        if (req.body.hour && !req.body.ampm) req.body.ampm = 'am'
+ 
         await Appointment.create({
             title:req.body.title,
             description:req.body.description,
@@ -132,6 +132,7 @@ app.post('/api/appointment', async(req,res)=>{
             minute:req.body.minute,
             ampm:req.body.ampm,
             keep:req.body.keep == 'keep' ? true : false,
+            eventType:req.body.eventType,
             sequence
         })
         console.log('Appointment Created')
@@ -186,7 +187,8 @@ app.put('/api/appointment/:id', async(req,res)=>{
                                                                     minute:req.body.minute,
                                                                     ampm:req.body.ampm,
                                                                     sequence,
-                                                                    keep:req.body.keep == 'keep' ? true : false
+                                                                    keep:req.body.keep == 'keep' ? true : false,
+                                                                    eventType:req.body.eventType
         })
         console.log('Appointment Updated')
         res.json('Appointment Updated')
