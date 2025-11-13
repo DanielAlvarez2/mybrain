@@ -148,9 +148,9 @@ export default function Ady() {
                                 <br/>
                                 {appointment.title}<br/>
                                 {appointment.description && <>{appointment.description}<br/></>}
-                                {appointment.eventType == 'recurring' && 'save as RECURRING'}
-                                {appointment.eventType == 'history' && 'save in HISTORY'}
-                                {appointment.eventType == 'delete' && 'DELETE'}
+                                {appointment.eventType == 'recurring' && ' -- save as RECURRING --'}
+                                {appointment.eventType == 'history' && ' -- save in HISTORY --'}
+                                {appointment.eventType == 'delete' && ' -- DELETE after event --'}
                                 <br/>
                                 <form onSubmit={handleSubmit}>
 
