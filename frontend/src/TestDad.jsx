@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import './Appointments.css'
+import './App.css'
 
 export default function App() {
 
@@ -7,16 +7,27 @@ export default function App() {
                         'https://mybrain-8bpo.onrender.com' :
                         'http://localhost:1111'
 
+    const [pixels, setPixels] = useState('')
+    function getPixels(){
+        fetch(`${BASE_URL}/api/pixels`)
+          .then(res=>res.json())
+          .then(json=>setPixels(json))
+          .catch(err=>console.log(err))
+    }
+    useEffect(()=>getPixels(),[])
 
-    const [today, setToday] = useState(Date().slice(0,10))
+
+
     const [appointments, setAppointments] = useState([])
+    const [today, setToday] = useState(Date().slice(0,10))
+    const [hour, setHour] = useState(Date().slice(16,18))
+    const [minute, setMinute] = useState(Date().slice(19,21))
+
     useEffect(()=>{
         getAppointments()
-        const updatePage = setInterval(()=>{
-          getAppointments()
-          setToday(Date().slice(0,10))
+        setTimeout(()=>{
+          window.location.reload()
         },1800000)
-        return ()=> clearInterval(updatePage)
     },[])
     const [birthdays, setBirthdays] = useState([])
 
@@ -39,7 +50,7 @@ export default function App() {
   return (
     <>
       <div className='wrapper'>
-        <div className='dads-phone dad-font'>
+        <div className='dads-phone'>
                     <h1 style={{display:'flex',
                                 gap:'10px',
                                 marginBottom:'5px',
@@ -51,7 +62,24 @@ export default function App() {
                     <hr/>     
             
             
-            <h2>{today}</h2><br/>
+            <h2>{today}</h2>
+            <h2>{hour}:{minute}</h2>
+            <br/>
+
+            <div style={{fontSize:`${pixels}px`}}>
+            
+            {(Date().slice(0,3) == 'Sat' || Date().slice(0,3) == 'Sun') &&  <>
+                                              <div style={{ background:'red',
+                                                            
+                                                            padding:'2px 0',
+                                                            textAlign:'center',
+                                                            color:'white'}}>
+                                                The girls do NOT<br/> 
+                                                have school today
+                                              </div><br/>
+                                            </>}
+
+
 
             {appointments.map(appointment=>{
                 return(
@@ -87,7 +115,9 @@ export default function App() {
                 (Date().slice(4,7) == bday.month && Date().slice(8,11) == bday.day) &&
                     <div key={bday._id}>
                       <div className='dad-display-bday'>
-                        Today is {bday.name}'s Birthday!<br/>
+                        Today is<br/>
+                        {bday.name}'s Birthday!<br/>
+                        {bday.description && <>{bday.description}<br/></>}
                         {bday.year &&  <>
                                           Turning {Date().slice(11,15)-bday.year} today<br/>
                                         </>}
@@ -96,7 +126,7 @@ export default function App() {
                     </div>              
             )
           })}
-
+        </div>{/* fontSize */}
         </div>{/* .dads-phone */}
       </div>{/* .wrapper */}
     </>
