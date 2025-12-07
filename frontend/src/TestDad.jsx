@@ -20,7 +20,7 @@ export default function App() {
 
     const [appointments, setAppointments] = useState([])
     const [today, setToday] = useState(Date().slice(0,10))
-    const [hour, setHour] = useState(Date().slice(16,18))
+    const [militaryHour, setMilitaryHour] = useState(Date().slice(16,18))
     const [minute, setMinute] = useState(Date().slice(19,21))
 
     useEffect(()=>{
@@ -28,6 +28,10 @@ export default function App() {
         setTimeout(()=>{
           window.location.reload()
         },1800000)
+        setInterval(()=>{
+          setMinute(Date().slice(19,21))
+          setMilitaryHour(Date().slice(16,18))
+        },60000)
     },[])
     const [birthdays, setBirthdays] = useState([])
 
@@ -63,7 +67,7 @@ export default function App() {
             
             
             <h2>{today}</h2>
-            <h2>{hour}:{minute}</h2>
+            <h2>{militaryHour > 12 ? `${militaryHour - 12}` : militaryHour}:{minute}{militaryHour > 12 ? 'pm' : 'am'}</h2>
             <br/>
 
             <div style={{fontSize:`${pixels}px`}}>
