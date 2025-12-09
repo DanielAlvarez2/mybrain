@@ -64,73 +64,77 @@ export default function App() {
                         <span>MYbrain</span>
                     </h1>
                     <hr/>     
+            <main>
+                <div className='sticky'>
+                    <h2>{today}</h2>
+                    <h2>{militaryHour > 12 ? `${militaryHour - 12}` : militaryHour}:{minute}{militaryHour > 12 ? 'pm' : 'am'}</h2>
+                    <br/>
+                </div>{/* .sticky */}
+
+                  <div style={{fontSize:`${pixels}px`}}>
+                  
+                  {(Date().slice(0,3) == 'Sat' || Date().slice(0,3) == 'Sun') &&  <>
+                                                    <div style={{ background:'red',
+                                                                  
+                                                                  padding:'2px 0',
+                                                                  textAlign:'center',
+                                                                  color:'white'}}>
+                                                      The girls do NOT<br/> 
+                                                      have school today
+                                                    </div><br/>
+                                                  </>}
+
+
+
+                  {appointments.map(appointment=>{
+                      return(
+                          appointment.month == Date().slice(4,7) &&  
+                          appointment.day == Date().slice(8,10) &&  
+                          appointment.year == Date().slice(11,15) &&  
+                          <div key={appointment._id}>
+                                      <b>
+                                      
+                                      {appointment.hour != '99' && 
+                                          <>
+                                            <span>
+                                                {appointment.hour}:
+                                                {appointment.minute < 10 ? '0'+appointment.minute : appointment.minute}
+                                                {appointment.ampm}
+                                            </span>
+                                            <br/>                                    
+                                          </>
+                                      } 
+
+                                      </b>
+                                      {appointment.title}<br/>
+                                      {appointment.description && <>{appointment.description}<br/></>}
+                                      
+                                      <br/>
+                                      
+                                  </div>
+                      )
+                  })}
+
+                {birthdays.map(bday=>{
+                  return(
+                      (Date().slice(4,7) == bday.month && Date().slice(8,11) == bday.day) &&
+                          <div key={bday._id}>
+                            <div className='dad-display-bday'>
+                              Today is<br/>
+                              {bday.name}'s Birthday!<br/>
+                              {bday.description && <>{bday.description}<br/></>}
+                              {bday.year &&  <>
+                                                Turning {Date().slice(11,15)-bday.year} today<br/>
+                                              </>}
+                            </div>                      
+                            <br/>
+                          </div>              
+                  )
+                })}
+              </div>{/* fontSize */}
+
+            </main>
             
-            
-            <h2>{today}</h2>
-            <h2>{militaryHour > 12 ? `${militaryHour - 12}` : militaryHour}:{minute}{militaryHour > 12 ? 'pm' : 'am'}</h2>
-            <br/>
-
-            <div style={{fontSize:`${pixels}px`}}>
-            
-            {(Date().slice(0,3) == 'Sat' || Date().slice(0,3) == 'Sun') &&  <>
-                                              <div style={{ background:'red',
-                                                            
-                                                            padding:'2px 0',
-                                                            textAlign:'center',
-                                                            color:'white'}}>
-                                                The girls do NOT<br/> 
-                                                have school today
-                                              </div><br/>
-                                            </>}
-
-
-
-            {appointments.map(appointment=>{
-                return(
-                    appointment.month == Date().slice(4,7) &&  
-                    appointment.day == Date().slice(8,10) &&  
-                    appointment.year == Date().slice(11,15) &&  
-                    <div key={appointment._id}>
-                                <b>
-                                
-                                {appointment.hour != '99' && 
-                                    <>
-                                      <span>
-                                          {appointment.hour}:
-                                          {appointment.minute < 10 ? '0'+appointment.minute : appointment.minute}
-                                          {appointment.ampm}
-                                      </span>
-                                      <br/>                                    
-                                    </>
-                                } 
-
-                                </b>
-                                {appointment.title}<br/>
-                                {appointment.description && <>{appointment.description}<br/></>}
-                                
-                                <br/>
-                                
-                            </div>
-                )
-            })}
-
-          {birthdays.map(bday=>{
-            return(
-                (Date().slice(4,7) == bday.month && Date().slice(8,11) == bday.day) &&
-                    <div key={bday._id}>
-                      <div className='dad-display-bday'>
-                        Today is<br/>
-                        {bday.name}'s Birthday!<br/>
-                        {bday.description && <>{bday.description}<br/></>}
-                        {bday.year &&  <>
-                                          Turning {Date().slice(11,15)-bday.year} today<br/>
-                                        </>}
-                      </div>                      
-                      <br/>
-                    </div>              
-            )
-          })}
-        </div>{/* fontSize */}
         </div>{/* .dads-phone */}
       </div>{/* .wrapper */}
     </>

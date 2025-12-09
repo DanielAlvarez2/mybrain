@@ -48,3 +48,8 @@ a{
 .navbar-ady span{
   padding-bottom:3px;
 }
+.sticky{
+  position:sticky;
+  top:0;
+  background:white;
+}
