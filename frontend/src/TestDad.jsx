@@ -67,7 +67,12 @@ export default function App() {
             <main>
                 <div className='sticky'>
                     <h2>{today}</h2>
-                    <h2>{militaryHour > 12 ? `${militaryHour - 12}` : militaryHour}:{minute}{militaryHour > 12 ? 'pm' : 'am'}</h2>
+                    {
+                      militaryHour == '00' ?
+                        <h2>12:{minute}am</h2>
+                      :
+                        <h2>{militaryHour > 12 ? `${militaryHour - 12}` : militaryHour}:{minute}{militaryHour > 11 ? 'pm' : 'am'}</h2>
+                    }
                     <br/>
                 </div>{/* .sticky */}
 
