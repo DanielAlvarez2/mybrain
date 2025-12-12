@@ -127,6 +127,7 @@ app.post('/api/appointment', async(req,res)=>{
             month:req.body.month,
             monthNum,
             day:req.body.day,
+            completed:false,
             hour:req.body.hour,
             militaryHour,
             minute:req.body.minute,
@@ -137,6 +138,19 @@ app.post('/api/appointment', async(req,res)=>{
         })
         console.log('Appointment Created')
         res.json('Appointment Created')
+    }catch(err){
+        console.log(err)
+    }
+})
+app.put('/api/toggle-completed/:id', async(req,res)=>{
+    try{
+        const target = await Appointment.findById(req.params.id)
+        if (!target.status){
+            await Appointment.findByIdAndUpdate({_id:req.params.id},{$set:{status: 'completed'}})
+        }else{
+            await Appointment.findByIdAndUpdate({_id:req.params.id},{status: req.body.status})
+        }
+        res.json('Completed Toggled')
     }catch(err){
         console.log(err)
     }

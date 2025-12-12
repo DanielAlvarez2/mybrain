@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import { PiSquare } from "react-icons/pi";
+import { PiCheckSquareDuotone } from "react-icons/pi";
 
 export default function App() {
 
@@ -51,6 +53,24 @@ export default function App() {
             .catch(err=>console.log(err))
     }
 
+    async function markCompleted(id){
+      await fetch(`${BASE_URL}/api/toggle-completed/${id}`,{method:'PUT',
+                                                            headers:{'Content-Type':'application/json'},
+                                                            body: JSON.stringify({status:'completed'})
+      })
+        .then(getAppointments)
+        .catch(err=>console.log(err))
+    }
+
+    async function markIncomplete(id){
+      await fetch(`${BASE_URL}/api/toggle-completed/${id}`,{method:'PUT',
+                                                            headers:{'Content-Type':'application/json'},
+                                                            body: JSON.stringify({status:'incomplete'})
+      })
+        .then(getAppointments)
+        .catch(err=>console.log(err))
+    }
+
   return (
     <>
       <div className='wrapper'>
@@ -96,9 +116,23 @@ export default function App() {
                           appointment.month == Date().slice(4,7) &&  
                           appointment.day == Date().slice(8,10) &&  
                           appointment.year == Date().slice(11,15) &&  
-                          <div key={appointment._id}>
+
+                          <div key={appointment._id} style={{display:'flex',gap:'10px',alignItems:'center'}}>
+                            <div>
+                              {
+                                appointment.status == 'completed' ? 
+                                  <PiCheckSquareDuotone style={{cursor:'pointer'}} onClick={()=>markIncomplete(appointment._id)} /> 
+                                : 
+                                  <PiSquare style={{cursor:'pointer'}} onClick={()=>markCompleted(appointment._id)} />
+                              }
+                              
+                              
+                            </div>
+
+                            <div>
+                              <span className={appointment.status == 'completed' && 'strikethrough'}>
+                                <span style={{color:'black'}}>
                                       <b>
-                                      
                                       {appointment.hour != '99' && 
                                           <>
                                             <span>
@@ -109,14 +143,14 @@ export default function App() {
                                             <br/>                                    
                                           </>
                                       } 
-
                                       </b>
                                       {appointment.title}<br/>
                                       {appointment.description && <>{appointment.description}<br/></>}
-                                      
                                       <br/>
-                                      
-                                  </div>
+                                </span>
+                              </span>
+                            </div>                                      
+                          </div>
                       )
                   })}
 

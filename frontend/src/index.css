@@ -53,3 +53,7 @@ a{
   top:0;
   background:white;
 }
+.strikethrough{
+  color:red;
+  text-decoration:line-through;
+}

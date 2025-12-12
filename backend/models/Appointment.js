@@ -12,6 +12,7 @@ const AppointmentSchema = new mongoose.Schema({
     minute: {type:Number},
     ampm:{type:String},
     keep: {type:Boolean},
+    status: {type:String},
     eventType: {type:String},
     sequence:{type:Number}
 },{timestamps:true})
