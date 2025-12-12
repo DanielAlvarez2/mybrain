@@ -75,6 +75,8 @@ export default function App() {
     <>
       <div className='wrapper'>
         <div className='dads-phone'>
+
+
                     <h1 style={{display:'flex',
                                 gap:'10px',
                                 marginBottom:'5px',
@@ -84,6 +86,8 @@ export default function App() {
                         <span>MYbrain</span>
                     </h1>
                     <hr/>     
+          
+          
             <main>
                 <div className='sticky'>
                     <h2>{today}</h2>
