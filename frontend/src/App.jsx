@@ -18,6 +18,14 @@ export default function App() {
     }
     useEffect(()=>getPixels(),[])
 
+    function getLastActiveDay(){
+      fetch(`${BASE_URL}/api/last-active-day`)
+        .then(res=>res.json())
+        .then(json=>json == 'refresh' && window.location.reload())
+        .catch(err=>console.log(err))
+    }
+    useEffect(()=>getLastActiveDay(),[])
+
 
 
     const [appointments, setAppointments] = useState([])

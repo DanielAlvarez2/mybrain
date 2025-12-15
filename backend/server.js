@@ -5,6 +5,7 @@ const Note = require('./models/Note.js')
 const Birthday = require('./models/Birthday.js')
 const Appointment = require('./models/Appointment.js')
 const Pixels = require('./models/Pixels.js')
+const LastActiveDay = require('./models/LastActiveDay.js')
 
 const app = express()
 app.use(express.json())
@@ -20,6 +21,30 @@ console.log('');
         console.log(err)
     }
 })()
+app.get('/api/last-active-day', async(req,res)=>{
+    try{
+        const allDays = await LastActiveDay.find()
+        if (allDays.length == 0) {
+            await Appointment.updateMany(
+                {status:'completed'},
+                {$set:{status:'incomplete'}}
+            )
+            await LastActiveDay.create({day:Date().slice(0,15)})
+            res.json('refresh')
+        }
+        if (allDays[0].day != Date().slice(0,15)){
+            await Appointment.updateMany(
+                {status:'completed'},
+                {$set:{status:'incomplete'}}
+            )
+            await LastActiveDay.findByIdAndUpdate({_id:allDays[0].id},{day:Date().slice(0,15)})
+            res.json('refresh')
+        }
+        res.json('do not refresh')
+    }catch(err){
+        console.log(err)
+    }
+})
 app.get('/api/pixels', async(req,res)=>{
     try{
         console.log('getting pixels')
