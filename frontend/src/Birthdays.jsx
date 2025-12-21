@@ -101,15 +101,15 @@ export default function Birthdays(){
                                         Name:<br/>
                                         <input  type='text' 
                                                 name='name' 
-                                                style={{width:'140px',padding:'0 2px'}}
+                                                style={{width:'80px',padding:'0 2px'}}
                                                 required />
                                     </label>
                                     <br/><br/>
                                     <label>
-                                        Relation/Nickname:<br/>
+                                        <span style={{fontSize:'10px'}}>Relation/Nickname:</span><br/>
                                         <input  type='text'
                                                 name='description'
-                                                style={{width:'140px',padding:'0 2px'}} /><br/>
+                                                style={{width:'80px',padding:'0 2px'}} /><br/>
                                         <span style={{fontSize:'11px'}}>(optional)</span>
                                     </label>
                                 </div>
