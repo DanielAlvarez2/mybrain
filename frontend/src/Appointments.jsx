@@ -153,7 +153,7 @@ export default function Appointments() {
                                         <span style={{color:'blue'}}>CHANGE TO:</span><br/>
 
                                         <div style={{display:'flex'}}>
-                                            <div style={{display:'flex',gap:'20px'}}>
+                                            <div style={{display:'flex',gap:'0px'}}>
                                                 <label>
                                                     Month:<br/>
                                                     <select name='month' 
@@ -229,7 +229,7 @@ export default function Appointments() {
                                             </div>
                                             <div style={{marginLeft:'auto'}}>
                                                 <label>
-                                                    Time: (optional)<br/>
+                                                    Time: <span style={{fontSize:'16px'}}>(optional)</span><br/>
                                                     <select name='hour' 
                                                             
                                                             defaultValue={appointment.hour}>
