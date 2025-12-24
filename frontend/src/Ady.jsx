@@ -459,8 +459,8 @@ export default function Ady() {
                             }} />
                 </label><br/><br/>
                 
-                <div style={{display:'flex'}}>
-                    <div style={{display:'flex',gap:'0px'}}>
+                
+                    <div style={{display:'flex',gap:'10px',width:'100%',justifyContent:'center'}}>
                         <label>
                             Month:<br/>
                             <select name='month' required defaultValue=''>
@@ -528,9 +528,14 @@ export default function Ady() {
                         </label>
 
                     </div>
-                    <div style={{marginLeft:'10px'}}>
+
+                    <br/>
+
+                    
+
+                    <div style={{display:'flex',justifyContent:'center',alignItems:'end'}}>
                         <label>
-                            Time: (optional)<br/>
+                            Time: <span style={{fontSize:'12px'}}>(optional)</span><br/>
                             <select name='hour' 
                                     
                                     defaultValue='99'>
@@ -623,7 +628,7 @@ export default function Ady() {
                         </span>
 
                     </div>
-                </div>{/* display:flex */}
+                
 
                 <br/>
                 <label>
