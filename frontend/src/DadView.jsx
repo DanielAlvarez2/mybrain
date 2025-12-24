@@ -106,9 +106,9 @@ return (
 <div id='font-size-control'
 style={{position:'absolute',zIndex:'10',
 right:'10px',
-color:'grey',
+color:'purple',
 top:'110px',
-fontSize:'25px'}}>
+fontSize:'20px'}}>
 font size<br/>
 <span onClick={decreaseFont}>-</span>
 &nbsp;{pixels}px&nbsp;
