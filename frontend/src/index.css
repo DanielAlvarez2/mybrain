@@ -13,7 +13,7 @@ textarea{
 .adys-phone{
     width:320px;
     min-height:1006px;
-    border:1px solid blue;
+    /* border:1px solid blue; */
     padding:10px;
 }
 .dads-phone{
