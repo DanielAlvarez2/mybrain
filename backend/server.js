@@ -117,6 +117,9 @@ app.post('/api/appointment', async(req,res)=>{
         }else if(req.body.month == 'Dec'){monthNum=12}
 
         let militaryHour
+        console.log('req.body.hour')
+        console.log(req.body.hour)
+        console.log(typeof(req.body.hour))
         if (req.body.hour == '99'){
             militaryHour = 99
         }else{
@@ -129,7 +132,8 @@ app.post('/api/appointment', async(req,res)=>{
                 militaryHour = Number(militaryHour) + 12
             }            
         }
-
+        console.log('militaryHour:')
+        console.log(militaryHour)
 
         let sequence;
         let sequenceYear = req.body.year
@@ -199,6 +203,8 @@ app.put('/api/appointment/:id', async(req,res)=>{
         let militaryHour = req.body.hour
         if(militaryHour == '12' && req.body.ampm == 'am') {
             militaryHour = 0
+        }else if(militaryHour == '12' && req.body.ampm == 'pm'){
+            militaryHour = 12
         }else if(req.body.ampm == 'pm') {
             militaryHour = Number(militaryHour) + 12
         }
