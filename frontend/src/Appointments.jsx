@@ -137,7 +137,9 @@ export default function Appointments() {
                                 </b>
                                 <br/>
                                 {appointment.title}<br/>
-                                {appointment.description && <>{appointment.description}<br/></>}
+                                <span className='description'>
+                                    {appointment.description && <>{appointment.description}<br/></>}
+                                </span>
                                 {appointment.keep ? 'SAVE in History' : 'DELETE from History'}
                                 <br/>
                                 <form onSubmit={handleSubmit}>

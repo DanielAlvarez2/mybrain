@@ -149,7 +149,9 @@ export default function Ady() {
                                 </b>
                                 <br/>
                                 {appointment.title}<br/>
-                                {appointment.description && <>{appointment.description}<br/></>}
+                                <span className='description'>
+                                    {appointment.description && <>{appointment.description}<br/></>}
+                                </span>
                                 {appointment.eventType == 'recurring' && ' -- save as RECURRING --'}
                                 {appointment.eventType == 'history' && ' -- save in HISTORY --'}
                                 {appointment.eventType == 'delete' && ' -- DELETE after event --'}

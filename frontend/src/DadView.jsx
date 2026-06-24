@@ -188,7 +188,9 @@ justifyContent:'center'}}>
                                       } 
                                       </b>
                                       {appointment.title}<br/>
-                                      {appointment.description && <>{appointment.description}<br/></>}
+                                      <span className='description'>
+                                        {appointment.description && <>{appointment.description}<br/></>}
+                                      </span>
                                       <br/>
                                 </span>
                               </span>

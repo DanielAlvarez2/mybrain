@@ -127,7 +127,9 @@ export default function Recurring() {
                                 </b>
                                 <br/>
                                 {appointment.title}<br/>
-                                {appointment.description && <>{appointment.description}<br/></>}
+                                <span className='description'>
+                                    {appointment.description && <>{appointment.description}<br/></>}
+                                </span>
                                 
                                 
                                 <form onSubmit={handleSubmit}>
