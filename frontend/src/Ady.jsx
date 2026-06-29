@@ -446,8 +446,9 @@ export default function Ady() {
             <form   action={createNewAppointment} 
                     style={{background:'lightgrey',
                             borderRadius:'10px',
+                            marginBottom:'100px',
                             padding:'5px'}} >
-                <h3>Add a New Appointment</h3>
+                <h3 style={{textAlign:'center'}}>Add a New Appointment</h3>
                 <br/>
                 
                 <label>
@@ -664,17 +665,20 @@ export default function Ady() {
                             name='event-type' /> DELETE it<br/>
 
                 </label><br/>
-
+                
+                <div style={{textAlign:'center',paddingBottom:'15px'}}>
                 <input  type='submit' 
                         value='Upload'
                         style={{padding:'5px 15px',
-                                background:'green',
-                                color:'white',
-                                cursor:'pointer',
-                                border:'none',
-                                fontSize:'20px',
-                                borderRadius:'5px'
+                            background:'green',
+                            color:'white',
+                            cursor:'pointer',
+                            border:'none',
+                            fontSize:'20px',
+                            margin:'0 auto',
+                            borderRadius:'5px'
                         }} />
+                </div>
             </form>
 
 
